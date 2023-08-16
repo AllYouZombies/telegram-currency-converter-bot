@@ -2,7 +2,7 @@
 
 Multifunctional Telegram bot.  
 
-> **It's not about purpose of the bot, but about the way it made.**
+> **It's not about purpose of the bot, but about the way it's made.**
 
 You can use it as a template for your own bots.  
 It's easy to add new commands and features.
