@@ -1,6 +1,12 @@
 __pycache__/
 *.py[cod]
 
-.idea
+venv/
+.venv/
+
+.idea/
 
 .env
+
+db.sqlite3
+uploads/

@@ -1,17 +1,24 @@
 __pycache__/
 *.py[cod]
 
+venv/
+.venv/
+
 Dockerfile
 compose.yml
 .dockerignore
 
+.git/
 .gitignore
-.git
 README.md
 LICENSE
 CONTRIBUTING.md
+docs/
 
-.idea
+.idea/
 
 .env
-.example.env
+.env.example
+
+db.sqlite3
+uploads/

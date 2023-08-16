@@ -45,7 +45,7 @@ services:
       POSTGRES_USER: *DB_USER
       POSTGRES_PASSWORD: *DB_PASSWORD
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", *DB_USER ]
+      test: [ "CMD", "pg_isready", "-q", "-d", *DB_NAME, "-U", *DB_USER ]
       interval: 5s
       timeout: 1s
       retries: 10
@@ -72,7 +72,7 @@ services:
 
   celery-worker:
     <<: *common
-    command: -A bot worker -l info -P prefork -c 2 -E
+    command: -A core worker -l info -P prefork -c 2 -E
     entrypoint: celery
     environment:
       <<: *common-env

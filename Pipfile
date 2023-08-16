@@ -9,14 +9,20 @@ python-dotenv = "1.0.0"
 # Telegram
 python-telegram-bot.all = "20.4"
 httpx = "~=0.24"
+# Localization
+Babel = "2.12"
 # Database
 sqlalchemy = "1.4"
 asyncpg = "0.24"
+# Async Celery tasks
+celery = "5.3"
+redis = "5"
 # Deployment
 gunicorn = "20.1"
 uvicorn.standart = "0.14"
 
 [dev-packages]
+daphne = "3.0"
 
 [requires]
-python_version = ">=3.8"
+python_version = "3"
