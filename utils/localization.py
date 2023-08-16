@@ -14,4 +14,7 @@ def activate_locale(language_code: str = DEFAULT_LANGUAGE) -> None:
     :param language_code: code of language to activate. Default is DEFAULT_LANGUAGE. Choices are SUPPORTED_LANGS
     :return: Nothing
     """
+
+    if language_code not in SUPPORTED_LANGS:
+        language_code = DEFAULT_LANGUAGE
     translations[language_code].install(names=['gettext', 'ngettext'])

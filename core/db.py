@@ -1,33 +1,73 @@
 from sqlalchemy import create_engine
-from sqlalchemy.ext import declarative
+from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
 from sqlalchemy.orm import sessionmaker
 
 from core.settings import DATABASE_URL
 
-"""
-Database engine and session factory.
 
-Usage:
-from core.db import Session
-
-session = Session()
-"""
-
-
-# Create the database engine
 engine = create_engine(DATABASE_URL, echo=True)
+Base = declarative_base()
 
-# Create a base class to define all the database subclasses
-TableDeclarativeBase = declarative.declarative_base()
-
-# Bind the engine to the metadata of the base class so that the
-TableDeclarativeBase.TableDeclarativeBase.metadata.bind = engine
-
-# Create all tables in the engine. This is equivalent to "Create Table"
-TableDeclarativeBase.TableDeclarativeBase.metadata.create_all()
-
-# Prepare the engine for declarative access
-declarative.DeferredReflection.prepare(engine)
-
-# Create a session factory
 Session = sessionmaker(bind=engine)
+
+
+class Manager:
+
+    def __init__(self, model):
+        self.model = model
+        self.session = Session()
+
+    def _create_instance(self, session, defaults: dict = None, **kwargs):
+        """
+        Create an instance of the model.
+
+        :param session: SQLAlchemy database session.
+        :param params: The values to create the instance with.
+        :return: Base instance.
+        """
+
+        params = {k: v for k, v in kwargs.items() if hasattr(self.model, k)}
+        params.update(defaults or {})
+        instance = self.model(**params)
+        session.add(instance)
+        session.commit()
+        return instance
+
+    def _get_instance(self, session, **kwargs):
+        instance = session.query(self.model).filter_by(**kwargs).first()
+        return instance
+
+    def get_or_create(self, defaults: dict = None, **kwargs) -> tuple:
+        """
+        Get an object if it exists, otherwise create it.
+
+        :param defaults: Default values for the object.
+        :param kwargs: The values to filter by.
+        :return: A tuple with the object and a boolean indicating if it was created.
+        """
+
+        instance = self._get_instance(self.session, **kwargs)
+        if instance:
+            return instance, False
+        else:
+            instance = self._create_instance(self.session, defaults=defaults, **kwargs)
+            return instance, True
+
+    def update_or_create(self, defaults: dict = None, **kwargs) -> tuple:
+        """
+        Update an object if it exists, otherwise create it.
+
+        :param defaults: Default values for the object.
+        :param kwargs: The values to filter by.
+        :return: A tuple with the object and a boolean indicating if it was created.
+        """
+
+        instance = self._get_instance(self.session, **kwargs)
+        if instance:
+            for k, v in defaults.items():
+                setattr(instance, k, v)
+            self.session.commit()
+            return instance, False
+        else:
+            instance = self._create_instance(self.session, defaults=defaults, **kwargs)
+            return instance, True

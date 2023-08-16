@@ -2,13 +2,16 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 from core.settings import BOT_TOKEN
+from users.models import User
 from utils.localization import activate_locale
 
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    lang = update.effective_user.language_code
+    user = User.from_update(update)
+    lang = user.language_code
+    user.objects.session.close()
     activate_locale(lang)
-    text = _('Hello, %s') % update.effective_user.first_name
+    text = _('Hello, %s') % user.first_name
     await update.message.reply_text(text)
 
 

@@ -26,7 +26,7 @@ docker compose up -d --build
 
 ## Features implemented
 
-- [x] [Internationalization](docs/localization.md)
+- [x] [Localization](docs/localization.md)
 - [x] Polling mode
 - [x] Latest async Telegram API support
 - [x] Database support
@@ -35,8 +35,10 @@ docker compose up -d --build
 
 ## Features to be implemented
 
+- [ ] Fully asynchronous mode
 - [ ] Webhook mode
 - [ ] Telegram payments
+- [ ] Database migrations management
 - [ ] Caching using [Redis](https://redis.io/)
 - [ ] [Logging](https://docs.python.org/3/library/logging.html)
 - [ ] [Testing](https://docs.python.org/3/library/unittest.html)
