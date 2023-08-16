@@ -1,6 +1,9 @@
-from sqlalchemy import Column, BigInteger, String
+import asyncio
+
+from sqlalchemy import Column, BigInteger, String, Boolean
 
 from core.db import Base, Manager, engine
+from core.settings import DEFAULT_LANGUAGE
 
 
 class User(Base):
@@ -14,23 +17,33 @@ class User(Base):
     first_name = Column(String, nullable=False)
     last_name = Column(String)
     username = Column(String)
-    language_code = Column(String, nullable=False)
+    language_code = Column(String, nullable=False, default=DEFAULT_LANGUAGE)
+
+    lock_lang = Column(Boolean, default=False)
 
     @classmethod
-    def from_update(cls, update):
+    async def from_update(cls, update):
         defaults = {
             'first_name': update.effective_user.first_name,
             'last_name': update.effective_user.last_name,
             'username': update.effective_user.username,
-            'language_code': update.effective_user.language_code,
         }
 
-        user, created = User.objects.update_or_create(user_id=update.effective_user.id, defaults=defaults)
+        user, created = await User.objects.update_or_create(user_id=update.effective_user.id, defaults=defaults)
+        if created or not user.lock_lang:
+            user.language_code = update.effective_user.language_code
+            await user.objects.session.commit()
         return user
 
 
 # Add a custom manager to the models
 setattr(User, 'objects', Manager(User))
 
-# Create all tables in the engine. This is equivalent to "Create Table"
-Base.metadata.create_all(engine)
+
+async def create_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(create_tables())

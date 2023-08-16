@@ -1,14 +1,15 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
 from sqlalchemy.orm import sessionmaker
 
 from core.settings import DATABASE_URL
 
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, echo=True)
 Base = declarative_base()
 
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 
 class Manager:
@@ -17,7 +18,7 @@ class Manager:
         self.model = model
         self.session = Session()
 
-    def _create_instance(self, session, defaults: dict = None, **kwargs):
+    async def _create_instance(self, session, defaults: dict = None, **kwargs):
         """
         Create an instance of the model.
 
@@ -30,14 +31,15 @@ class Manager:
         params.update(defaults or {})
         instance = self.model(**params)
         session.add(instance)
-        session.commit()
+        await session.commit()
         return instance
 
-    def _get_instance(self, session, **kwargs):
-        instance = session.query(self.model).filter_by(**kwargs).first()
+    async def _get_instance(self, session, **kwargs):
+        result = await session.execute(select(self.model).filter_by(**kwargs))
+        instance = result.scalars().first()
         return instance
 
-    def get_or_create(self, defaults: dict = None, **kwargs) -> tuple:
+    async def get_or_create(self, defaults: dict = None, **kwargs) -> tuple:
         """
         Get an object if it exists, otherwise create it.
 
@@ -46,14 +48,14 @@ class Manager:
         :return: A tuple with the object and a boolean indicating if it was created.
         """
 
-        instance = self._get_instance(self.session, **kwargs)
+        instance = await self._get_instance(self.session, **kwargs)
         if instance:
             return instance, False
         else:
-            instance = self._create_instance(self.session, defaults=defaults, **kwargs)
+            instance = await self._create_instance(self.session, defaults=defaults, **kwargs)
             return instance, True
 
-    def update_or_create(self, defaults: dict = None, **kwargs) -> tuple:
+    async def update_or_create(self, defaults: dict = None, **kwargs) -> tuple:
         """
         Update an object if it exists, otherwise create it.
 
@@ -62,12 +64,12 @@ class Manager:
         :return: A tuple with the object and a boolean indicating if it was created.
         """
 
-        instance = self._get_instance(self.session, **kwargs)
+        instance = await self._get_instance(self.session, **kwargs)
         if instance:
             for k, v in defaults.items():
                 setattr(instance, k, v)
-            self.session.commit()
+            await self.session.commit()
             return instance, False
         else:
-            instance = self._create_instance(self.session, defaults=defaults, **kwargs)
+            instance = await self._create_instance(self.session, defaults=defaults, **kwargs)
             return instance, True

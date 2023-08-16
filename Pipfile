@@ -12,7 +12,7 @@ httpx = "~=0.24"
 # Localization
 Babel = "2.12"
 # Database
-sqlalchemy = "1.4"
+sqlalchemy.asyncio = "1.4"
 # Async Celery tasks
 celery = "5.3"
 redis = "5"
@@ -21,7 +21,7 @@ gunicorn = "20.1"
 uvicorn.standart = "0.14"
 
 [dev-packages]
-daphne = "3.0"
+aiosqlite = "0.19"
 
 [requires]
 python_version = "3"

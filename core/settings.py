@@ -22,7 +22,7 @@ BOT_TOKEN = get_env('BOT_TOKEN')
 # Database settings
 
 # Database engine
-DATABASE_URL = get_env('DATABASE_URL', 'sqlite:///db.sqlite3')
+DATABASE_URL = get_env('DATABASE_URL', 'sqlite+aiosqlite:///db.sqlite3')
 
 
 # Localizations settings

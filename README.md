@@ -26,16 +26,16 @@ docker compose up -d --build
 
 ## Features implemented
 
+- [x] Fully asynchronous
 - [x] [Localization](docs/localization.md)
 - [x] Polling mode
 - [x] Latest async Telegram API support
-- [x] Database support
+- [x] Async database queris using SQLAlchemy
 - [x] Async tasks using [Celery](https://docs.celeryproject.org/en/stable/)
 - [x] Docker, Docker Compose and Docker Swarm support
 
 ## Features to be implemented
 
-- [ ] Fully asynchronous mode
 - [ ] Webhook mode
 - [ ] Telegram payments
 - [ ] Database migrations management
