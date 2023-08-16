@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+# Common
+python-dotenv = "1.0.0"
+# Telegram
+python-telegram-bot.all = "20.4"
+httpx = "~=0.24"
+# Database
+sqlalchemy = "1.4"
+asyncpg = "0.24"
+# Deployment
+gunicorn = "20.1"
+uvicorn.standart = "0.14"
+
+[dev-packages]
+
+[requires]
+python_version = ">=3.8"

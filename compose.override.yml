@@ -1,0 +1,13 @@
+include:
+  - compose.base.yml
+
+#services:
+#  extended-bot:
+#    extends:
+#      service: bot
+#    user: root
+#
+#  extended-celery-worker:
+#    extends:
+#      service: celery-worker
+#    user: root
