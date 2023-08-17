@@ -16,8 +16,8 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN --mount=type=bind,source=Pipfile,target=Pipfile \
-    --mount=type=bind,source=Pipfile.lock,target=Pipfile.lock \
-    pipenv requirements > requirements.txt \
+    pipenv lock \
+    && pipenv requirements > requirements.txt \
     && python -m venv /venv \
     && . /venv/bin/activate \
     && pip install -r requirements.txt

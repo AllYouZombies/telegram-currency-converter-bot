@@ -13,6 +13,7 @@ httpx = "~=0.24"
 Babel = "2.12"
 # Database
 sqlalchemy.asyncio = "1.4"
+asyncpg = "0.28"
 # Async Celery tasks
 celery = "5.3"
 redis = "5"
