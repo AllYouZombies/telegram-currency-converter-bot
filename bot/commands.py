@@ -6,6 +6,15 @@ from users.models import User
 from utils.localization import activate_locale
 
 
+def command_description(text):
+    def decorator(func):
+        func.__doc__ = text
+        return func
+
+    return decorator
+
+
+@command_description('🚀 Restart the bot')
 async def _command_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = await User.from_update(update)
     lang = user.language_code

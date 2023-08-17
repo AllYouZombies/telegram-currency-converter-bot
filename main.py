@@ -23,7 +23,7 @@ async def _set_commands(application: Application) -> None:
     _commands = []
     for cmd in available_commands:
         application.add_handler(CommandHandler(cmd[9:], getattr(commands, cmd)))
-        _commands.append((cmd[9:], _(cmd[9:])))
+        _commands.append((cmd[9:], getattr(commands, cmd).__doc__))
 
     for lang in SUPPORTED_LANGS:
         activate_locale(lang)
