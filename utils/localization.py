@@ -26,7 +26,7 @@ except NameError:
     activate_locale()
 
 
-def translate(msg_to_translate, get_ori=False):
+def rev_translate(translated_msg):
     current_lang = gettext._current_domain
 
     if current_lang not in SUPPORTED_LANGS:
@@ -35,13 +35,9 @@ def translate(msg_to_translate, get_ori=False):
     def find_key(lang_code):
         items = translations[lang_code]._catalog.items()
         for key, value in items:
-            if value == msg_to_translate:
+            if value == translated_msg or value == translated_msg:
                 return key
         return None
 
-    if get_ori:
-        orig = find_key(current_lang) or find_key(DEFAULT_LANGUAGE) or msg_to_translate
-        return orig
-    else:
-        translated = translations[current_lang].gettext(msg_to_translate)
-        return translated
+    orig = find_key(current_lang) or find_key(DEFAULT_LANGUAGE) or translated_msg
+    return orig

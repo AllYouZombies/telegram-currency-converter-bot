@@ -1,15 +1,11 @@
-import builtins
 import os
 
 from telegram.ext import ApplicationBuilder, CommandHandler, Application
 
 from core.db import engine, Base
 from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
-from utils.localization import activate_locale, translate
+from utils.localization import activate_locale, rev_translate
 from bot import commands
-
-builtins._ = translate
-_ = translate
 
 
 async def _set_commands(application: Application) -> None:
@@ -26,7 +22,7 @@ async def _set_commands(application: Application) -> None:
             cmd for cmd in dir(commands) if cmd.startswith('_command_')
         )
         _commands = list(
-            (cmd[9:], _(_(getattr(commands, cmd).__doc__, get_ori=True)))
+            (cmd[9:], _(rev_translate(getattr(commands, cmd).__doc__)))
             for cmd in available_commands
         )
         await application.bot.set_my_commands(
