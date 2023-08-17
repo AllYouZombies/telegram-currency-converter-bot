@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-17 09:50+0500\n"
+"POT-Creation-Date: 2023-08-17 19:50+0500\n"
 "PO-Revision-Date: 2023-08-16 14:17+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,18 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: bot/main.py:14
+#: bot/commands.py:17
+msgid "🚀 Restart the bot"
+msgstr "🚀 Restart the bot"
+
+#: bot/commands.py:22
 #, python-format
 msgid "Hello, %s"
 msgstr ""
 
-#: bot/main.py:16
+#: bot/commands.py:24
 msgid "Just a button"
 msgstr ""
-
-#~ msgid "English"
-#~ msgstr ""
-
-#~ msgid "Russian"
-#~ msgstr ""
-

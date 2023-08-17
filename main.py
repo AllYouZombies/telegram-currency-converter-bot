@@ -1,10 +1,15 @@
+import builtins
 import os
 
 from telegram.ext import ApplicationBuilder, CommandHandler, Application
 
 from core.db import engine, Base
 from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
-from utils.localization import activate_locale
+from utils.localization import activate_locale, translate
+from bot import commands
+
+builtins._ = translate
+_ = translate
 
 
 async def _set_commands(application: Application) -> None:
@@ -15,22 +20,28 @@ async def _set_commands(application: Application) -> None:
     :param application: Application instance
     """
 
-    from bot import commands
-    available_commands = (
-        cmd for cmd in dir(commands) if cmd.startswith('_command_')
-    )
-
-    _commands = []
-    for cmd in available_commands:
-        application.add_handler(CommandHandler(cmd[9:], getattr(commands, cmd)))
-        _commands.append((cmd[9:], getattr(commands, cmd).__doc__))
-
     for lang in SUPPORTED_LANGS:
         activate_locale(lang)
+        available_commands = list(
+            cmd for cmd in dir(commands) if cmd.startswith('_command_')
+        )
+        _commands = list(
+            (cmd[9:], _(_(getattr(commands, cmd).__doc__, get_ori=True)))
+            for cmd in available_commands
+        )
         await application.bot.set_my_commands(
             language_code=lang,
             commands=_commands
         )
+
+
+async def _set_command_handlers(application: Application) -> None:
+    available_commands = list(
+        cmd for cmd in dir(commands) if cmd.startswith('_command_')
+    )
+
+    for cmd in available_commands:
+        application.add_handler(CommandHandler(cmd[9:], getattr(commands, cmd)))
 
 
 async def _init_models() -> None:
@@ -51,6 +62,7 @@ async def _init_models() -> None:
 async def post_init(application: Application) -> None:
     await _init_models()
     await application.bot.delete_my_commands()
+    await _set_command_handlers(application)
     await _set_commands(application)
 
 

@@ -49,6 +49,9 @@ DEFAULT_LANGUAGE = get_env('DEFAULT_LANGUAGE', 'ru')
 # Supported languages
 SUPPORTED_LANGS = ['en', 'ru']
 
+# Locale directory
+LOCALE_DIR = BASE_DIR / 'locale'
+
 
 # Redis settings
 

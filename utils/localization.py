@@ -1,6 +1,6 @@
 import gettext
 
-from core.settings import SUPPORTED_LANGS, DEFAULT_LANGUAGE
+from core.settings import SUPPORTED_LANGS, DEFAULT_LANGUAGE, LOCALE_DIR
 
 translations = {}
 
@@ -20,4 +20,28 @@ def activate_locale(language_code: str = DEFAULT_LANGUAGE) -> None:
     translations[language_code].install(names=['gettext', 'ngettext'])
 
 
-activate_locale()
+try:
+    _(None)
+except NameError:
+    activate_locale()
+
+
+def translate(msg_to_translate, get_ori=False):
+    current_lang = gettext._current_domain
+
+    if current_lang not in SUPPORTED_LANGS:
+        current_lang = DEFAULT_LANGUAGE
+
+    def find_key(lang_code):
+        items = translations[lang_code]._catalog.items()
+        for key, value in items:
+            if value == msg_to_translate:
+                return key
+        return None
+
+    if get_ori:
+        orig = find_key(current_lang) or find_key(DEFAULT_LANGUAGE) or msg_to_translate
+        return orig
+    else:
+        translated = translations[current_lang].gettext(msg_to_translate)
+        return translated

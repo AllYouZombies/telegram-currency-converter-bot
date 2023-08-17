@@ -14,7 +14,7 @@ def command_description(text):
     return decorator
 
 
-@command_description('🚀 Restart the bot')
+@command_description(_('🚀 Restart the bot'))
 async def _command_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = await User.from_update(update)
     lang = user.language_code
