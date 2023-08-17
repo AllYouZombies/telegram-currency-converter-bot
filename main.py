@@ -7,11 +7,14 @@ from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
 from utils.localization import activate_locale
 
 
-async def _delete_commands(application: Application) -> None:
-    await application.bot.delete_my_commands()
-
-
 async def _set_commands(application: Application) -> None:
+    """
+    Set bot commands. This method is called after bot initialization.
+    Import all commands from bot/commands.py and set them as bot commands.
+
+    :param application: Application instance
+    """
+
     from bot import commands
     available_commands = (
         cmd for cmd in dir(commands) if cmd.startswith('_command_')
@@ -19,9 +22,7 @@ async def _set_commands(application: Application) -> None:
 
     _commands = []
     for cmd in available_commands:
-        application.add_handler(
-            CommandHandler(cmd[9:], getattr(commands, cmd))
-        )
+        application.add_handler(CommandHandler(cmd[9:], getattr(commands, cmd)))
         _commands.append((cmd[9:], _(cmd[9:])))
 
     for lang in SUPPORTED_LANGS:
@@ -32,7 +33,11 @@ async def _set_commands(application: Application) -> None:
         )
 
 
-async def _init_models():
+async def _init_models() -> None:
+    """
+    Import all models from app/models.py and create tables in database.
+    """
+
     modules = os.listdir(BASE_DIR)
     for module in modules:
         if os.path.isdir(os.path.join(BASE_DIR, module)) and \
@@ -45,7 +50,7 @@ async def _init_models():
 
 async def post_init(application: Application) -> None:
     await _init_models()
-    await _delete_commands(application)
+    await application.bot.delete_my_commands()
     await _set_commands(application)
 
 
@@ -60,3 +65,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
