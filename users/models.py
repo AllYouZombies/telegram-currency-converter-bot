@@ -40,10 +40,10 @@ class User(Base):
 setattr(User, 'objects', Manager(User))
 
 
-async def create_tables():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(create_tables())
+# async def create_tables():
+#     async with engine.begin() as conn:
+#         await conn.run_sync(Base.metadata.create_all)
+#
+#
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(create_tables())

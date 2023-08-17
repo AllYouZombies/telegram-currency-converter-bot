@@ -21,4 +21,5 @@ docs/
 .env.example
 
 db.sqlite3
+persistence.pickle
 uploads/

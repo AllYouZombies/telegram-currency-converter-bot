@@ -1,5 +1,4 @@
 from telegram import KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import ExtBot
 
 
 class Keyboard:

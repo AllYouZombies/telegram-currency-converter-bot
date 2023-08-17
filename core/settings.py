@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from dotenv import load_dotenv
+from telegram.ext import PicklePersistence
 
 from utils.env import get_env
 
@@ -9,6 +12,8 @@ load_dotenv()
 
 # General settings
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Timezone
 TIME_ZONE = get_env('TIME_ZONE', 'UTC')
 
@@ -17,6 +22,10 @@ TIME_ZONE = get_env('TIME_ZONE', 'UTC')
 
 # Telegram bot token
 BOT_TOKEN = get_env('BOT_TOKEN')
+
+# Peristence settings
+PERSISTENCE_CLASS = PicklePersistence
+persistence = PERSISTENCE_CLASS(BASE_DIR / 'persistence.pickle')
 
 
 # Database settings

@@ -10,10 +10,15 @@ def get_env(key: str, default: Any = None) -> Any:
     :return: environment variable value or default value
     """
     value = env(key, default)
-    if value == '':
+    if value is None:
         return default
-    if value.lower() == 'true':
+    elif value == '':
+        return default
+    elif value.lower() == 'true':
         return True
-    if value.lower() == 'false':
+    elif value.lower() == 'false':
         return False
-    return value
+    elif value.isdigit():
+        return int(value)
+    else:
+        return value

@@ -18,3 +18,6 @@ def activate_locale(language_code: str = DEFAULT_LANGUAGE) -> None:
     if language_code not in SUPPORTED_LANGS:
         language_code = DEFAULT_LANGUAGE
     translations[language_code].install(names=['gettext', 'ngettext'])
+
+
+activate_locale()
