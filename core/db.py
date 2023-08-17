@@ -1,10 +1,11 @@
-from sqlalchemy import create_engine, select
+from contextlib import asynccontextmanager
+
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.ext.declarative import declarative_base, DeferredReflection
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from core.settings import DATABASE_URL
-
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 Base = declarative_base()
@@ -12,11 +13,24 @@ Base = declarative_base()
 Session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 
+@asynccontextmanager
+async def session_scope():
+    """Provide a transactional scope around a series of operations."""
+    session = Session()
+    try:
+        yield session
+        await session.commit()
+    except Exception as e:
+        await session.rollback()
+        raise
+    finally:
+        await session.close()
+
+
 class Manager:
 
     def __init__(self, model):
         self.model = model
-        self.session = Session()
 
     async def _create_instance(self, session, defaults: dict = None, **kwargs):
         """
@@ -31,7 +45,6 @@ class Manager:
         params.update(defaults or {})
         instance = self.model(**params)
         session.add(instance)
-        await session.commit()
         return instance
 
     async def _get_instance(self, session, **kwargs):
@@ -47,13 +60,13 @@ class Manager:
         :param kwargs: The values to filter by.
         :return: A tuple with the object and a boolean indicating if it was created.
         """
-
-        instance = await self._get_instance(self.session, **kwargs)
-        if instance:
-            return instance, False
-        else:
-            instance = await self._create_instance(self.session, defaults=defaults, **kwargs)
-            return instance, True
+        async with session_scope() as session:
+            instance = await self._get_instance(session, **kwargs)
+            if instance:
+                return instance, False
+            else:
+                instance = await self._create_instance(session, defaults=defaults, **kwargs)
+                return instance, True
 
     async def update_or_create(self, defaults: dict = None, **kwargs) -> tuple:
         """
@@ -64,12 +77,12 @@ class Manager:
         :return: A tuple with the object and a boolean indicating if it was created.
         """
 
-        instance = await self._get_instance(self.session, **kwargs)
-        if instance:
-            for k, v in defaults.items():
-                setattr(instance, k, v)
-            await self.session.commit()
-            return instance, False
-        else:
-            instance = await self._create_instance(self.session, defaults=defaults, **kwargs)
-            return instance, True
+        async with session_scope() as session:
+            instance = await self._get_instance(session, **kwargs)
+            if instance:
+                for k, v in defaults.items():
+                    setattr(instance, k, v)
+                return instance, False
+            else:
+                instance = await self._create_instance(session, defaults=defaults, **kwargs)
+                return instance, True

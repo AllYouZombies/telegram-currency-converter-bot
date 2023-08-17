@@ -10,7 +10,6 @@ async def _command_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     user = await User.from_update(update)
     lang = user.language_code
     activate_locale(lang)
-    await user.objects.session.close()
     text = _('Hello, %s') % user.first_name
     keys = [
         (_('Just a button'), 'just_a_button'),

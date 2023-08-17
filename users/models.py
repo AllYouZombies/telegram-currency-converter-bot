@@ -2,7 +2,7 @@ import asyncio
 
 from sqlalchemy import Column, BigInteger, String, Boolean
 
-from core.db import Base, Manager, engine
+from core.db import Base, Manager, engine, session_scope
 from core.settings import DEFAULT_LANGUAGE
 
 
@@ -31,8 +31,8 @@ class User(Base):
 
         user, created = await User.objects.update_or_create(user_id=update.effective_user.id, defaults=defaults)
         if created or not user.lock_lang:
-            user.language_code = update.effective_user.language_code
-            await user.objects.session.commit()
+            async with session_scope():
+                user.language_code = update.effective_user.language_code
         return user
 
 
