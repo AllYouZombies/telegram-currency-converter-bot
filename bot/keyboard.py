@@ -4,7 +4,7 @@ from telegram.ext import ExtBot
 
 class Keyboard:
 
-    async def get_kb(self, buttons: tuple[list[str] | str]) -> ReplyKeyboardMarkup:
+    async def get_kb(self, buttons: list[list[str] | str]) -> ReplyKeyboardMarkup:
         keyboard = []
         for button in buttons:
             keyboard.append([KeyboardButton(button)])

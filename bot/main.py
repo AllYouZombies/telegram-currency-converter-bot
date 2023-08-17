@@ -13,11 +13,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     activate_locale(lang)
     text = _('Hello, %s') % user.first_name
     keys = [
-        (_('Change language'), 'change_lang'),
-        [
-            (_('Change language'), 'change_lang'),
-            (_('Change language'), 'change_lang'),
-        ]
+        (_('Just a button'), 'just_a_button'),
     ]
     kb = await Keyboard().get_inline_kb(keys)
     await update.message.reply_text(text, reply_markup=kb)
