@@ -37,10 +37,10 @@ docker compose up -d --build
 ## Features to be implemented
 
 - [ ] Webhook mode
-- [ ] Telegram payments
 - [ ] Database migrations management
 - [ ] Caching using [Redis](https://redis.io/)
 - [ ] [Logging](https://docs.python.org/3/library/logging.html)
 - [ ] [Testing](https://docs.python.org/3/library/unittest.html)
 - [ ] [CI/CD](https://en.wikipedia.org/wiki/CI/CD)
+- [ ] Telegram payments
 - [ ] Kubernetes deployment
