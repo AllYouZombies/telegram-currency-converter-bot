@@ -2,14 +2,36 @@ x-overrides: &overrides
   user: root
 
 services:
+  postgres:
+    extends:
+      file: compose.yml
+      service: postgres
+    cpu_count: 1
+    mem_limit: 256m
+    mem_reservation: 128m
+
+  redis:
+    extends:
+      file: compose.yml
+      service: redis
+    cpu_count: 1
+    mem_limit: 128m
+    mem_reservation: 32m
+
   bot:
     extends:
       file: compose.yml
       service: bot
     <<: *overrides
+    cpu_count: 1
+    mem_limit: 256m
+    mem_reservation: 128m
 
   celery-worker:
     extends:
       file: compose.yml
       service: celery-worker
     <<: *overrides
+    cpu_count: 1
+    mem_limit: 256m
+    mem_reservation: 128m

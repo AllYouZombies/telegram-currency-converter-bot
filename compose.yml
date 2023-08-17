@@ -8,6 +8,8 @@ x-common: &common
     restart_policy:
       condition: any
       delay: 5s
+      max_attempts: 5
+      window: 60s
     rollback_config:
       delay: 10s
       failure_action: continue
@@ -32,7 +34,6 @@ x-common-env: &common-env
   DB_NAME: *DB_NAME
   DB_USER: *DB_USER
   DB_PASSWORD: *DB_PASSWORD
-  DATABASE_URL: postgres://*DB_USER:*DB_PASSWORD@*DB_HOST:*DB_PORT/*DB_NAME
 
 x-common-volumes:
   volumes:
@@ -41,6 +42,31 @@ x-common-volumes:
 services:
   postgres:
     image: postgres:15
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 60s
+      rollback_config:
+        delay: 10s
+        failure_action: continue
+        order: stop-first
+        parallelism: 1
+      update_config:
+        delay: 10s
+        failure_action: rollback
+        order: stop-first
+        parallelism: 1
     environment:
       POSTGRES_DB: *DB_NAME
       POSTGRES_USER: *DB_USER
@@ -55,6 +81,31 @@ services:
 
   redis:
     image: redis:alpine
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.125"
+          memory: 64M
+        reservations:
+          cpus: "0.0625"
+          memory: 32M
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 60s
+      rollback_config:
+        delay: 10s
+        failure_action: continue
+        order: stop-first
+        parallelism: 1
+      update_config:
+        delay: 10s
+        failure_action: rollback
+        order: stop-first
+        parallelism: 1
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 5s
@@ -66,6 +117,14 @@ services:
   bot:
     <<: *common
     build: .
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
     environment:
       <<: *common-env
     volumes:
@@ -74,6 +133,14 @@ services:
   celery-worker:
     <<: *common
     command: -A core worker -l info -P prefork -c 2 -E
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
     entrypoint: celery
     environment:
       <<: *common-env
