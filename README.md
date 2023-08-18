@@ -24,6 +24,8 @@ cp .env.example .env
 docker compose up -d --build
 ```
 
+---
+
 ## Features implemented
 
 - [x] Fully asynchronous
@@ -44,3 +46,5 @@ docker compose up -d --build
 - [ ] [CI/CD](https://en.wikipedia.org/wiki/CI/CD)
 - [ ] Telegram payments
 - [ ] Kubernetes deployment
+
+---
