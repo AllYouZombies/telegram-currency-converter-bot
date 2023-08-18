@@ -1,33 +1,29 @@
 from contextlib import asynccontextmanager
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 
 from core.settings import DATABASE_URL
 
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, pool_pre_ping=True)
 Base = declarative_base()
 
-Session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+Session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
 @asynccontextmanager
 async def session_scope():
     """Provide a transactional scope around a series of operations."""
     session = Session()
-    for i in range(3):
-        try:
-            yield session
-            await session.commit()
-        except Exception as e:
-            await session.rollback()
-            raise
-        else:
-            break
-        finally:
-            await session.close()
+    try:
+        yield session
+        await session.commit()
+    except Exception as e:
+        await session.rollback()
+        raise
+    finally:
+        await session.close()
 
 
 class Manager:
