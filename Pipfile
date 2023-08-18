@@ -17,9 +17,6 @@ asyncpg = "0.28"
 # Async Celery tasks
 celery = "5.3"
 redis = "5"
-# Deployment
-gunicorn = "20.1"
-uvicorn.standart = "0.14"
 
 [dev-packages]
 aiosqlite = "0.19"
