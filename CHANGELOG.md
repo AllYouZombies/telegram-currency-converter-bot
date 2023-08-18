@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## Unreleased
+
+<small>[Compare with latest](https://gitlab.anttek.io/kapusta/telegram-bot/compare/0.1.2...HEAD)</small>
+
+### Changed
+
+- Changed sessionmaker to async_sessionmaker Added pool_pre_ping=True to engine Removed for loop on top of session_scope() ([34aaeb7](https://gitlab.anttek.io/kapusta/telegram-bot/commit/34aaeb7307d939fdeffcc6ae0b5ef4614a1df625) by Рустам Астафеев).
+
+<!-- insertion marker -->
 ## [0.1.2](https://gitlab.anttek.io/kapusta/telegram-bot/tags/0.1.2) - 2023-08-18
 
 <small>[Compare with 0.1.1](https://gitlab.anttek.io/kapusta/telegram-bot/compare/0.1.1...0.1.2)</small>

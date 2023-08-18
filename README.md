@@ -42,6 +42,7 @@ docker compose up -d --build
 - [ ] Webhook mode
 - [ ] Database migrations management
 - [ ] Caching using [Redis](https://redis.io/)
+- [ ] Persistence implementation with [Redis](https://redis.io/)
 - [ ] S3 storage support for media files
 - [ ] [Logging](https://docs.python.org/3/library/logging.html)
 - [ ] [Testing](https://docs.python.org/3/library/unittest.html)
