@@ -6,12 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## Unreleased
+## [0.1.2](https://gitlab.anttek.io/kapusta/telegram-bot/tags/0.1.2) - 2023-08-18
 
-<small>[Compare with latest](https://gitlab.anttek.io/kapusta/telegram-bot/compare/0.1.1...HEAD)</small>
+<small>[Compare with 0.1.1](https://gitlab.anttek.io/kapusta/telegram-bot/compare/0.1.1...0.1.2)</small>
 
 ### Fixed
 
+- Fixed db session breaking down. Need to monitor from now ([138eba7](https://gitlab.anttek.io/kapusta/telegram-bot/commit/138eba7dda9e37c2ab7248d6099ea2d68f76f72e) by Рустам Астафеев).
 - Fixed user lang don't updated ([3c24730](https://gitlab.anttek.io/kapusta/telegram-bot/commit/3c24730921727470c3ab5cf6241ae33088e8d3aa) by Рустам Астафеев).
 - Fixed compose syntax ([4b1ea11](https://gitlab.anttek.io/kapusta/telegram-bot/commit/4b1ea118e55e32ac2e142ca3079a26e10130ba0f) by Рустам Астафеев).
 
@@ -19,7 +20,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Removed environment definition as it's not usable with bot ([036c31e](https://gitlab.anttek.io/kapusta/telegram-bot/commit/036c31edad8eea860ad307eb3c175327587befce) by Рустам Астафеев).
 
-<!-- insertion marker -->
 ## [0.1.1](https://gitlab.anttek.io/kapusta/telegram-bot/tags/0.1.1) - 2023-08-18
 
 <small>[Compare with 0.1.0](https://gitlab.anttek.io/kapusta/telegram-bot/compare/0.1.0...0.1.1)</small>
