@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <small>[Compare with latest](https://gitlab.anttek.io/kapusta/telegram-bot/compare/0.1.0...HEAD)</small>
 
+### Added
+
+- Added CHANGELOG.md ([3117f9e](https://gitlab.anttek.io/kapusta/telegram-bot/commit/3117f9ecbe9a02415888326050d20fd3f4716505) by Рустам Астафеев).
+
 <!-- insertion marker -->
 ## [0.1.0](https://gitlab.anttek.io/kapusta/telegram-bot/tags/0.1.0) - 2023-08-17
 
