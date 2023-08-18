@@ -1,7 +1,7 @@
 version: "3.9"
 
 x-common: &common
-  image: kapusta/telegram-bot:${TAG:-latest}
+  image: registry.anttek.io/kapusta/telegram-bot:${TAG:-latest}
   deploy:
     mode: replicated
     replicas: 1
