@@ -133,7 +133,7 @@ services:
 
   celery-worker:
     <<: *common
-    command: -A core worker -l info -P prefork -c 2 -E
+    command: -A core worker -l info -P prefork -c 2 -E -B
     deploy:
       resources:
         limits:
