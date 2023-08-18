@@ -53,7 +53,7 @@ services:
           cpus: "0.25"
           memory: 128M
       restart_policy:
-        condition: any
+        condition: on-failure
         delay: 10s
         max_attempts: 5
         window: 60s
@@ -92,7 +92,7 @@ services:
           cpus: "0.0625"
           memory: 32M
       restart_policy:
-        condition: any
+        condition: on-failure
         delay: 10s
         max_attempts: 5
         window: 60s
