@@ -1,7 +1,7 @@
 version: "3.9"
 
 x-common: &common
-  image: registry.anttek.io/kapusta/telegram-bot:${TAG:-latest}
+  image: registry.anttek.io/kapusta/telegram-exchange-rates-bot:${TAG:-latest}
   deploy:
     mode: replicated
     replicas: 1
@@ -20,7 +20,7 @@ x-common: &common
       failure_action: rollback
       order: start-first
       parallelism: 1
-  restart: always
+#  restart: always
 
 x-db-name: &DB_NAME kapusta_telegram_bot
 x-db-user: &DB_USER kapusta_telegram_bot
@@ -28,6 +28,7 @@ x-db-password: &DB_PASSWORD kapusta_telegram_bot
 
 x-common-env: &common-env
   BOT_TOKEN: ${BOT_TOKEN?Variable BOT_TOKEN is required}
+  GETGEOAPI_KEY: ${GETGEOAPI_KEY?Variable GETGEOAPI_KEY is required}
   REDIS_BASE_URL: redis://redis:6379
   DB_HOST: postgres
   DB_PORT: 5432

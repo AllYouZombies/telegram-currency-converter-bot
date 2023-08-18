@@ -14,6 +14,21 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_CURR = "UZS"
+
+SUPPORTED_CURRENCIES = [
+    "USD",
+    "RUB",
+    "KZT",
+    "EUR",
+]
+
+GETGEOAPI_KEY = get_env('GETGEOAPI_KEY')
+
+DAILY_REQUESTS_LIMIT = 48
+
+UPDATE_INTERVAL = 60 * 60 * 24 / (DAILY_REQUESTS_LIMIT / len(SUPPORTED_CURRENCIES))
+
 # Timezone
 TIME_ZONE = get_env('TIME_ZONE', 'UTC')
 

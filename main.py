@@ -1,11 +1,13 @@
 import os
 
-from telegram.ext import ApplicationBuilder, CommandHandler, Application
+from telegram.ext import ApplicationBuilder, CommandHandler, Application, InlineQueryHandler
 
+from bot.inline import inline_query
 from core.db import engine, Base
 from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
 from utils.localization import activate_locale, rev_translate
 from bot import commands
+from converter.tasks import retrieve_exchage_rates
 
 
 async def _set_commands(application: Application) -> None:
@@ -59,6 +61,7 @@ async def post_init(application: Application) -> None:
     await _init_models()
     await application.bot.delete_my_commands()
     await _set_command_handlers(application)
+    application.add_handler(InlineQueryHandler(inline_query))
     await _set_commands(application)
 
 
@@ -67,6 +70,8 @@ def main():
         .persistence(persistence) \
         .post_init(post_init) \
         .build()
+
+    # retrieve_exchage_rates.delay()
 
     app_instance.run_polling()
 
