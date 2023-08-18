@@ -31,8 +31,9 @@ class User(Base):
 
         user, created = await User.objects.update_or_create(user_id=update.effective_user.id, defaults=defaults)
         if created or not user.lock_lang:
-            async with session_scope():
+            async with session_scope() as session:
                 user.language_code = update.effective_user.language_code
+                session.add(user)
         return user
 
 
