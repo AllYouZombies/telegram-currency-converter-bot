@@ -30,19 +30,6 @@ build:
       when: never
     - when: always
 
-deploy_staging:
-  stage: deploy
-  image: curlimages/curl:latest
-  variables:
-    VIRTUAL_HOST: beta.$DOMAIN
-    TAG: $CI_COMMIT_SHORT_SHA
-  before_script:
-    - source $staging_env
-  script:
-    - curl -X POST "$PORTAINER_WEBHOOK_URL?TAG=$TAG&VIRTUAL_HOST=$VIRTUAL_HOST"
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "staging"'
-
 release:
   stage: release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
@@ -57,16 +44,15 @@ release:
     - if: $CI_COMMIT_TAG
       when: always
 
-deploy_production:
+deploy:
   stage: deploy
   image: curlimages/curl:latest
   variables:
-    VIRTUAL_HOST: $DOMAIN
     TAG: $CI_COMMIT_TAG
   before_script:
     - source $production_env
   script:
-    - curl -X POST "$PORTAINER_WEBHOOK_URL?TAG=$TAG&VIRTUAL_HOST=$VIRTUAL_HOST"
+    - curl -X POST "$PORTAINER_WEBHOOK_URL?TAG=$TAG"
   rules:
     - if: $CI_COMMIT_TAG
       when: always
