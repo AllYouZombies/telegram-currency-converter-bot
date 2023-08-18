@@ -35,6 +35,7 @@ docker compose up -d --build
 - [x] Async database queris using SQLAlchemy
 - [x] Async tasks using [Celery](https://docs.celeryproject.org/en/stable/)
 - [x] Docker, Docker Compose and Docker Swarm support
+- [x] [CI/CD] using [GitLab CI](https://docs.gitlab.com/ee/ci/) and [Portainer](https://www.portainer.io/)
 
 ## Features to be implemented
 
@@ -43,7 +44,6 @@ docker compose up -d --build
 - [ ] Caching using [Redis](https://redis.io/)
 - [ ] [Logging](https://docs.python.org/3/library/logging.html)
 - [ ] [Testing](https://docs.python.org/3/library/unittest.html)
-- [ ] [CI/CD](https://en.wikipedia.org/wiki/CI/CD)
 - [ ] Telegram payments
 - [ ] Kubernetes deployment
 
