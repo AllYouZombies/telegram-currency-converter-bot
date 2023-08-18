@@ -17,14 +17,17 @@ Session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 async def session_scope():
     """Provide a transactional scope around a series of operations."""
     session = Session()
-    try:
-        yield session
-        await session.commit()
-    except Exception as e:
-        await session.rollback()
-        raise
-    finally:
-        await session.close()
+    for i in range(3):
+        try:
+            yield session
+            await session.commit()
+        except Exception as e:
+            await session.rollback()
+            raise
+        else:
+            break
+        finally:
+            await session.close()
 
 
 class Manager:
@@ -32,7 +35,7 @@ class Manager:
     def __init__(self, model):
         self.model = model
 
-    async def _create_instance(self, session, defaults: dict = None, **kwargs):
+    async def _create_instance(self, defaults: dict = None, **kwargs):
         """
         Create an instance of the model.
 
@@ -44,11 +47,13 @@ class Manager:
         params = {k: v for k, v in kwargs.items() if hasattr(self.model, k)}
         params.update(defaults or {})
         instance = self.model(**params)
-        session.add(instance)
+        async with session_scope() as session:
+            session.add(instance)
         return instance
 
-    async def _get_instance(self, session, **kwargs):
-        result = await session.execute(select(self.model).filter_by(**kwargs))
+    async def _get_instance(self, **kwargs):
+        async with session_scope() as session:
+            result = await session.execute(select(self.model).filter_by(**kwargs))
         instance = result.scalars().first()
         return instance
 
@@ -60,13 +65,12 @@ class Manager:
         :param kwargs: The values to filter by.
         :return: A tuple with the object and a boolean indicating if it was created.
         """
-        async with session_scope() as session:
-            instance = await self._get_instance(session, **kwargs)
-            if instance:
-                return instance, False
-            else:
-                instance = await self._create_instance(session, defaults=defaults, **kwargs)
-                return instance, True
+        instance = await self._get_instance(**kwargs)
+        if instance:
+            return instance, False
+        else:
+            instance = await self._create_instance(defaults=defaults, **kwargs)
+            return instance, True
 
     async def update_or_create(self, defaults: dict = None, **kwargs) -> tuple:
         """
@@ -77,12 +81,13 @@ class Manager:
         :return: A tuple with the object and a boolean indicating if it was created.
         """
 
-        async with session_scope() as session:
-            instance = await self._get_instance(session, **kwargs)
-            if instance:
+        instance = await self._get_instance(**kwargs)
+        if instance:
+            async with session_scope() as session:
                 for k, v in defaults.items():
                     setattr(instance, k, v)
-                return instance, False
-            else:
-                instance = await self._create_instance(session, defaults=defaults, **kwargs)
-                return instance, True
+                    session.add(instance)
+            return instance, False
+        else:
+            instance = await self._create_instance(defaults=defaults, **kwargs)
+            return instance, True
