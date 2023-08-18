@@ -1,7 +1,7 @@
 version: "3.9"
 
 x-common: &common
-  image: registry.anttek.io/kapusta/telegram-exchange-rates-bot:${TAG:-latest}
+  image: registry.anttek.io/kapusta/telegram-currency-converter-bot:${TAG:-latest}
   deploy:
     mode: replicated
     replicas: 1
