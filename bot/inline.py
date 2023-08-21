@@ -9,11 +9,17 @@ from telegram.ext import ContextTypes
 
 from converter.models import ExchangeRate
 from core.settings import SUPPORTED_CURRENCIES, BASE_CURR
+from users.models import User
+from utils.localization import activate_locale
 
 
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle the inline query. This is run when you type: @botusername <query>"""
     query = update.inline_query.query
+
+    user = await User.from_update(update)
+    lang = user.language_code
+    activate_locale(lang)
 
     if not query or not query.isdigit():  # empty query should not be handled
         return
