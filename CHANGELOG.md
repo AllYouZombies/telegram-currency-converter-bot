@@ -6,14 +6,48 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## Unreleased
+## [1.1.2](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.1.2) - 2023-08-21
 
-<small>[Compare with latest](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/0.2.3...HEAD)</small>
+<small>[Compare with 1.1.1](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.1.1...1.1.2)</small>
 
 ### Added
 
 - Added some improvements ([afdc7df](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/afdc7dfeb3481a7ec95331ea1fd98d5eca634b96) by Рустам Астафеев).
+
+## [1.1.1](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.1.1) - 2023-08-21
+
+<small>[Compare with 1.1.0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.1.0...1.1.1)</small>
+
+### Added
+
+- Added some improvements ([dc589d0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/dc589d077c7a7eacb9495ec2583148426ea1ffc1) by Рустам Астафеев).
+
+## [1.1.0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.1.0) - 2023-08-21
+
+<small>[Compare with 1.0.1](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.0.1...1.1.0)</small>
+
+### Added
+
 - Added feature to get rates without query ([9162ee7](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/9162ee75564e4bc4fd6b16674890fe777e972161) by Рустам Астафеев).
+
+## [1.0.1](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.0.1) - 2023-08-21
+
+<small>[Compare with 1.0.0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.0.0...1.0.1)</small>
+
+### Changed
+
+- Changed: don't convert in description ([b21178b](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/b21178bf4602c78698160cbd4727130a4398e67d) by Рустам Астафеев).
+
+## [1.0.0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.0.0) - 2023-08-21
+
+<small>[Compare with 0.2.4](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/0.2.4...1.0.0)</small>
+
+## [0.2.4](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/0.2.4) - 2023-08-21
+
+<small>[Compare with 0.2.3](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/0.2.3...0.2.4)</small>
+
+### Added
+
 - Added needs: ['build'] to image push stage ([e213064](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/e213064ba1f5ba566fb497b927d89a6670f05047) by Рустам Астафеев).
 
 ### Fixed
@@ -24,7 +58,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Changed: don't convert in description ([b21178b](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/b21178bf4602c78698160cbd4727130a4398e67d) by Рустам Астафеев).
 - Changed text on start ([c6d40ee](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/c6d40eecadbfa4eea9b15cc9a24f3ae98c048d1e) by Рустам Астафеев).
 - Changed gitlab pipeline: split build and push phases ([361c659](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/361c6596873062c8a41f7becc31711cfc3c2e157) by Рустам Астафеев).
 
@@ -32,7 +65,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Removed build stages split ([cebbc9b](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/cebbc9b8bd9ddd197bcbeb4844976e313f10b49a) by Рустам Астафеев).
 
-<!-- insertion marker -->
 ## [0.2.3](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/0.2.3) - 2023-08-21
 
 <small>[Compare with 0.2.2](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/0.2.2...0.2.3)</small>
