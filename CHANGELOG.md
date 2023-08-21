@@ -10,9 +10,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <small>[Compare with latest](https://gitlab.anttek.io/kapusta/telegram-bot/compare/0.1.2...HEAD)</small>
 
+### Added
+
+- Added needs: ['build'] to image push stage ([e213064](https://gitlab.anttek.io/kapusta/telegram-bot/commit/e213064ba1f5ba566fb497b927d89a6670f05047) by Рустам Астафеев).
+- Added comment to celery service, it runs both worker and beat ([593a338](https://gitlab.anttek.io/kapusta/telegram-bot/commit/593a33811f86a2089f7f1bc060a26bb018ecfb27) by Рустам Астафеев).
+- Added empty Celery Beat schedule setting ([d1aa644](https://gitlab.anttek.io/kapusta/telegram-bot/commit/d1aa6447428794582b231c197a42742a8ea41e63) by Рустам Астафеев).
+
+### Fixed
+
+- Fixed wrong service name ([2ef3f17](https://gitlab.anttek.io/kapusta/telegram-bot/commit/2ef3f171ee6670da1d6615caa6d287b302c99716) by Рустам Астафеев).
+- Fixed syntax error: unexpected end of file (expecting "fi") ([2e3ba03](https://gitlab.anttek.io/kapusta/telegram-bot/commit/2e3ba03ddbeace3d84a8a2b37274e7ecaa384779) by Рустам Астафеев).
+- Fixed celery container new name ([4e7cdd4](https://gitlab.anttek.io/kapusta/telegram-bot/commit/4e7cdd4734c47516de29635181e082dbcdbe2398) by Рустам Астафеев).
+- Fixed Celery autodiscover_tasks() can't discover tasks ([6bff463](https://gitlab.anttek.io/kapusta/telegram-bot/commit/6bff463545d90daba7fef531fdd784c5a0060401) by Рустам Астафеев).
+
 ### Changed
 
+- Changed gitlab pipeline: split build and push phases ([361c659](https://gitlab.anttek.io/kapusta/telegram-bot/commit/361c6596873062c8a41f7becc31711cfc3c2e157) by Рустам Астафеев).
+- Changed Celery container command to start with Beat ([8a0867a](https://gitlab.anttek.io/kapusta/telegram-bot/commit/8a0867a5455d099e6a32de058bdece7cf8c6af74) by Рустам Астафеев).
 - Changed sessionmaker to async_sessionmaker Added pool_pre_ping=True to engine Removed for loop on top of session_scope() ([34aaeb7](https://gitlab.anttek.io/kapusta/telegram-bot/commit/34aaeb7307d939fdeffcc6ae0b5ef4614a1df625) by Рустам Астафеев).
+
+### Removed
+
+- Removed build stages split ([cebbc9b](https://gitlab.anttek.io/kapusta/telegram-bot/commit/cebbc9b8bd9ddd197bcbeb4844976e313f10b49a) by Рустам Астафеев).
+- Removed unused libs from requirements ([a690fb6](https://gitlab.anttek.io/kapusta/telegram-bot/commit/a690fb66548b8a001e33533c1a428013e8c660c7) by Рустам Астафеев).
 
 <!-- insertion marker -->
 ## [0.1.2](https://gitlab.anttek.io/kapusta/telegram-bot/tags/0.1.2) - 2023-08-18
