@@ -14,6 +14,11 @@ app.conf.task_serializer = 'json'
 app.conf.result_serializer = 'json'
 app.conf.accept_content = ['json']
 
+# Celery beat schedule
+app.conf.beat_schedule = {
+
+}
+
 module_names = []
 modules = os.listdir(BASE_DIR)
 for module in modules:
