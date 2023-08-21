@@ -85,10 +85,3 @@ CELERY_ENABLE_UTC = True
 # Task default queue
 CELERY_TASK_DEFAULT_QUEUE = 'default'
 
-# Schedule tasks
-CELERYBEAT_SCHEDULE = {
-    'retrieve_exchange_rates': {
-        'task': 'converter.tasks.retrieve_exchage_rates',
-        'schedule': timedelta(minutes=UPDATE_INTERVAL)
-    },
-}
