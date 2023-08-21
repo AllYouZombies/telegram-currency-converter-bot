@@ -22,5 +22,5 @@ async def _command_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     text = _('Hello, %s') % user.first_name
     bot_username = context.bot.username
     text += _('\n\nThis bot is a simple currency converter. \n'
-              'You can use it inline by typing: @%s <query>\n') % bot_username
+              'You can use it inline by typing: @%s <amount to convert>\n') % bot_username
     await update.message.reply_text(text)

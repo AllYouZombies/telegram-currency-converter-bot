@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-17 19:50+0500\n"
+"POT-Creation-Date: 2023-08-21 09:39+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,11 @@ msgid "Hello, %s"
 msgstr ""
 
 #: bot/commands.py:24
-msgid "Just a button"
+#, python-format
+msgid ""
+"\n"
+"\n"
+"This bot is a simple currency converter. \n"
+"You can use it inline by typing: @%s <amount to convert>\n"
 msgstr ""
 
