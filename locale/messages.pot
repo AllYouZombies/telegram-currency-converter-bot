@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-21 10:28+0500\n"
+"POT-Creation-Date: 2023-08-21 17:18+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,5 +36,17 @@ msgid ""
 "You can use it inline by typing:\n"
 "\n"
 "<code>@%s 100</code>\n"
+msgstr ""
+
+#: bot/inline.py:45
+msgid "CB rate"
+msgstr ""
+
+#: bot/inline.py:46
+msgid "Buying"
+msgstr ""
+
+#: bot/inline.py:47
+msgid "Selling"
 msgstr ""
 

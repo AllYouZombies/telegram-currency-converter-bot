@@ -5,6 +5,10 @@ from sqlalchemy import Column, Integer, DateTime, String, Float, select, desc
 from core.db import Base, session_scope
 
 
+def default_rate(context):
+    return context.get_current_parameters()['rate']
+
+
 class ExchangeRate(Base):
     __tablename__ = "exchange_rates"
 
@@ -14,9 +18,14 @@ class ExchangeRate(Base):
     from_currency = Column(String, nullable=False)
     to_currency = Column(String, nullable=False)
     rate = Column(Float, nullable=False)
+    source = Column(String, nullable=True)
+    buy_rate = Column(Float, nullable=True, default=default_rate)
+    sell_rate = Column(Float, nullable=True, default=default_rate)
 
     @classmethod
-    async def get_rate(cls, from_currency: str | float | int, to_currency: str | float | int) -> 'ExchangeRate':
+    async def get_rates(cls,
+                        from_currency: str | float | int,
+                        to_currency: str | float | int) -> list:
         """
         Get the latest exchange rate for the given currencies.
 
@@ -26,8 +35,12 @@ class ExchangeRate(Base):
         """
 
         async with session_scope() as session:
-            result = await session.execute(
-                select(cls).filter_by(from_currency=from_currency, to_currency=to_currency).order_by(desc(cls.created_at))
+            query = select(cls).filter_by(
+                from_currency=from_currency,
+                to_currency=to_currency
             )
-            instance = result.scalars().first()
-            return instance
+            query = query.order_by(desc(cls.created_at))
+
+            result = await session.execute(query)
+            results = result.scalars().all()
+            return results

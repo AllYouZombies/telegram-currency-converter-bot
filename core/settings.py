@@ -1,11 +1,9 @@
-from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
 from telegram.ext import PicklePersistence
 
 from utils.env import get_env
-
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,10 +23,10 @@ SUPPORTED_CURRENCIES = [
 ]
 
 GETGEOAPI_KEY = get_env('GETGEOAPI_KEY')
+GETGEOAPI_DAILY_REQUESTS_LIMIT = 48
+GETGEOAPI_UPDATE_INTERVAL = int((60 * 60 * 60 * 24 / (GETGEOAPI_DAILY_REQUESTS_LIMIT / len(SUPPORTED_CURRENCIES))) / 2)
 
-DAILY_REQUESTS_LIMIT = 48
-
-UPDATE_INTERVAL = 60 * 60 * 24 / (DAILY_REQUESTS_LIMIT / len(SUPPORTED_CURRENCIES))
+UZUM_BANK_UPDATE_INTERVAL = 60
 
 # Timezone
 TIME_ZONE = get_env('TIME_ZONE', 'UTC')

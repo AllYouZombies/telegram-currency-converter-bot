@@ -1,9 +1,8 @@
 import os
-from datetime import timedelta
 
 from celery import Celery
 
-from core.settings import REDIS_BASE_URL, TIME_ZONE, BASE_DIR, UPDATE_INTERVAL
+from core.settings import REDIS_BASE_URL, TIME_ZONE, BASE_DIR, GETGEOAPI_UPDATE_INTERVAL, UZUM_BANK_UPDATE_INTERVAL
 
 app = Celery('core')
 
@@ -17,13 +16,9 @@ app.conf.accept_content = ['json']
 
 # Celery beat schedule
 app.conf.beat_schedule = {
-
-}
-
-app.conf.beat_schedule = {
-    'retrieve_exchange_rates': {
-        'task': 'converter.tasks.retrieve_exchage_rates',
-        'schedule': timedelta(minutes=UPDATE_INTERVAL)
+    'retrieve_uzum_exchange_rates': {
+        'task': 'converter.tasks.retrieve_uzum_exchange_rates',
+        'schedule': 30
     },
 }
 

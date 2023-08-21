@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 # Common
 python-dotenv = "1.0.0"
-requests = "2.25"
+aiohttp = "3.8"
 # Telegram
 python-telegram-bot.all = "20.4"
 httpx = "~=0.24"
