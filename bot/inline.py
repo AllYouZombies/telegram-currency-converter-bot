@@ -47,7 +47,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         buying_str = _('Buying')
         selling_str = _('Selling')
         title = f'{curr} ({cb_rate_str}: {cb_rate})'
-        text = f'🗓️ <b>{datetime.date.today().strftime("%d.%m.%Y")}</b>'
+        text = f'<b>{sep(query)} {curr}</b>'
         for exchange_rate in exchange_rates:
             buying = sep(exchange_rate.buy_rate)
             selling = sep(exchange_rate.sell_rate)
@@ -59,17 +59,17 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
             )
             if query != 1:
                 text += (
-                    f'<b>{sep(query)} {curr}</b>\n\n'
                     f' - {buying_str}: <b>{buying_converted}</b>\n'
                     f' - {selling_str}: <b>{selling_converted}</b>\n\n'
                 )
             text += (
-                f'<b>1 {curr}</b>\n\n'
+                f'1 {curr}:\n\n'
                 f' - {buying_str}: <b>{buying}</b>\n'
                 f' - {selling_str}: <b>{selling}</b>\n\n'
-                f'---\n\n'
-                f'{cb_rate_str}: {cb_rate}\n\n'
+                f'---'
             )
+
+        text += f'\n\n{cb_rate_str}: {cb_rate}\n\n'
 
         description = (f'{buying_str}: {sep(first_exchange_rate.buy_rate)} '
                        f'({first_exchange_rate.source})\n'
