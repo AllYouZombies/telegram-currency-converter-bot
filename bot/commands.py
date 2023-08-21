@@ -20,8 +20,7 @@ async def _command_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     lang = user.language_code
     activate_locale(lang)
     text = _('Hello, %s') % user.first_name
-    keys = [
-        (_('Just a button'), 'just_a_button'),
-    ]
-    kb = await Keyboard().get_inline_kb(keys)
-    await update.message.reply_text(text, reply_markup=kb)
+    bot_username = context.bot.username
+    text += _('\n\nThis bot is a simple currency converter. \n'
+              'You can use it inline by typing: @%s <query>\n') % bot_username
+    await update.message.reply_text(text)
