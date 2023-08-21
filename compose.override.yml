@@ -27,7 +27,7 @@ services:
     mem_limit: 256m
     mem_reservation: 128m
 
-  celery-worker:
+  celery:
     extends:
       file: compose.yml
       service: celery-worker
