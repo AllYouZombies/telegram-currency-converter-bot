@@ -131,9 +131,9 @@ services:
     volumes:
       - *uploads
 
-  celery-worker:
+  celery:
     <<: *common
-    command: -A core worker -l info -P prefork -c 2 -E -B
+    command: -A core worker -l info -P prefork -c 2 -E -B  # Run both worker and beat
     deploy:
       resources:
         limits:
