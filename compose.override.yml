@@ -30,7 +30,7 @@ services:
   celery:
     extends:
       file: compose.yml
-      service: celery-worker
+      service: celery
     <<: *overrides
     cpu_count: 1
     mem_limit: 256m
