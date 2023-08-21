@@ -63,9 +63,9 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                      f'---\n\n'
                      f'{cb_rate_str}: <b>{cb_rate}</b>\n\n')
 
-        description = (f'{buying_str}: {sep("{0:.2f}".format(first_exchange_rate.buy_rate * query))} '
+        description = (f'{buying_str}: {sep("{0:.2f}".format(first_exchange_rate.buy_rate))} '
                        f'({first_exchange_rate.source})\n'
-                       f'{selling_str}: {sep("{0:.2f}".format(first_exchange_rate.sell_rate * query))} '
+                       f'{selling_str}: {sep("{0:.2f}".format(first_exchange_rate.sell_rate))} '
                        f'({first_exchange_rate.source})')
 
         article = InlineQueryResultArticle(
