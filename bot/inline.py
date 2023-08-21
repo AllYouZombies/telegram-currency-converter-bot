@@ -13,10 +13,14 @@ from users.models import User
 from utils.localization import activate_locale
 
 
-def sep(s, thou=" ", dec="."):
-    integer, decimal = s.split(".")
+def sep(s, thou=" ", dec=".", digits=2):
+    s = str(s)
+    integer, decimal = s.split(dec)
     integer = re.sub(r"\B(?=(?:\d{3})+$)", thou, integer)
-    return integer + dec + decimal
+    if int(decimal) == 0:
+        return integer
+    decimal = decimal[:digits]
+    return f'{integer}{dec}{decimal}'
 
 
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -38,24 +42,24 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         if not exchange_rates:
             continue
         first_exchange_rate = exchange_rates[0]
-        cb_rate = sep('{0:.2f}'.format(first_exchange_rate.rate))
+        cb_rate = sep(first_exchange_rate.rate)
         cb_rate_str = _('CB rate')
         buying_str = _('Buying')
         selling_str = _('Selling')
         title = f'{curr} ({cb_rate_str}: {cb_rate})'
         text = f'🗓️ <b>{datetime.date.today().strftime("%d.%m.%Y")}</b>'
         for exchange_rate in exchange_rates:
-            buying = sep('{0:.2f}'.format(exchange_rate.buy_rate))
-            selling = sep('{0:.2f}'.format(exchange_rate.sell_rate))
-            buying_converted = sep('{0:.2f}'.format(exchange_rate.buy_rate * query))
-            selling_converted = sep('{0:.2f}'.format(exchange_rate.sell_rate * query))
+            buying = sep(exchange_rate.buy_rate)
+            selling = sep(exchange_rate.sell_rate)
+            buying_converted = sep(exchange_rate.buy_rate * query)
+            selling_converted = sep(exchange_rate.sell_rate * query)
             text += (
                 f'\n\n---\n\n'
                 f'🏦 <b>{exchange_rate.source} ({exchange_rate.created_at.strftime("%d.%m.%Y")})</b>\n\n'
             )
             if query != 1:
                 text += (
-                    f'<b>{query} {curr}</b>\n\n'
+                    f'<b>{sep(query)} {curr}</b>\n\n'
                     f' - {buying_str}: <b>{buying_converted}</b>\n'
                     f' - {selling_str}: <b>{selling_converted}</b>\n\n'
                 )
@@ -64,12 +68,12 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                 f' - {buying_str}: <b>{buying}</b>\n'
                 f' - {selling_str}: <b>{selling}</b>\n\n'
                 f'---\n\n'
-                f'{cb_rate_str}: <b>{cb_rate}</b>\n\n'
+                f'{cb_rate_str}: {cb_rate}\n\n'
             )
 
-        description = (f'{buying_str}: {sep("{0:.2f}".format(first_exchange_rate.buy_rate))} '
+        description = (f'{buying_str}: {sep(first_exchange_rate.buy_rate)} '
                        f'({first_exchange_rate.source})\n'
-                       f'{selling_str}: {sep("{0:.2f}".format(first_exchange_rate.sell_rate))} '
+                       f'{selling_str}: {sep(first_exchange_rate.sell_rate)} '
                        f'({first_exchange_rate.source})')
 
         article = InlineQueryResultArticle(
