@@ -21,6 +21,7 @@ async def _command_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     activate_locale(lang)
     text = _('Hello, %s') % user.first_name
     bot_username = context.bot.username
-    text += _('\n\nThis bot is a simple currency converter. \n'
-              'You can use it inline by typing: @%s <amount to convert>\n') % bot_username
-    await update.message.reply_text(text)
+    text += _('\n\nThis bot is a simple currency converter.\n\n'
+              'You can use it inline by typing:\n\n'
+              '<code>@%s 100</code>\n') % bot_username
+    await update.message.reply_text(text, parse_mode='HTML')
