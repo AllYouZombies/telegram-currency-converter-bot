@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, DateTime, String, Float, select, desc
+from sqlalchemy import Column, Integer, DateTime, String, Float, select, desc, func, and_
 
 from core.db import Base, session_scope
 
@@ -35,11 +35,23 @@ class ExchangeRate(Base):
         """
 
         async with session_scope() as session:
-            query = select(cls).filter_by(
-                from_currency=from_currency,
-                to_currency=to_currency
+            subquery = (
+                select(cls.source, func.max(cls.created_at).label('max_created_at'))
+                .filter_by(from_currency=from_currency, to_currency=to_currency)
+                .group_by(cls.source)
+                .alias()
             )
-            query = query.order_by(desc(cls.created_at))
+
+            query = (
+                select(cls)
+                .join(
+                    subquery,
+                    and_(
+                        cls.source == subquery.c.source,
+                        cls.created_at == subquery.c.max_created_at
+                    )
+                )
+            )
 
             result = await session.execute(query)
             results = result.scalars().all()
