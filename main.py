@@ -10,11 +10,16 @@ from utils.localization import activate_locale, rev_translate
 from bot import commands, inlines
 
 
+# Disable logging for httpx, telegram and httpcore.
+# These libraries are used by the telegram bot library and they spam the logs.
+# Current solution is temporary and should be replaced with a better one.
 for lib in ['httpx', 'telegram', 'httpcore']:
     lib_logger = logging.getLogger(lib)
     lib_logger.setLevel(logging.WARNING)
 
+# Set up logging
 log = logging.getLogger('core')
+# TODO: Set up logging level from settings
 logging.basicConfig(level=logging.DEBUG)
 
 
