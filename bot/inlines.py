@@ -1,6 +1,5 @@
-import datetime
+import logging
 import re
-from html import escape
 from uuid import uuid4
 
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
@@ -13,6 +12,9 @@ from users.models import User
 from utils.localization import activate_locale
 
 
+log = logging.getLogger('inlines')
+
+
 def sep(s, thou=" ", dec=".", digits=2):
     s = str(s)
     integer, decimal = s.split(dec)
@@ -23,10 +25,22 @@ def sep(s, thou=" ", dec=".", digits=2):
     return f'{integer}{dec}{decimal}'
 
 
-async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def _inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Handle inline query.
+    This method is called when user sends an inline query.
+    It fetches exchange rates from the database and sends them to the user.
+
+    :param update: Update instance
+    :param context: Context instance
+    """
+
     query = update.inline_query.query
+    log.debug(f'Received inline query: {query}')
+    log.debug(f'Checking user: {update.effective_user.id}')
     user = await User.from_update(update)
     lang = user.language_code
+    log.debug(f'Activating user locale: {lang}')
     activate_locale(lang)
 
     if not query:
@@ -37,10 +51,10 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         return
     results = []
 
-    for curr in SUPPORTED_CURRENCIES:
+    async def _create_article():
         exchange_rates = await ExchangeRate.get_rates(curr, BASE_CURR)  # All sources
         if not exchange_rates:
-            continue
+            return None
         first_exchange_rate = exchange_rates[0]
         cb_rate = sep(first_exchange_rate.rate)
         cb_rate_str = _('CB rate')
@@ -83,5 +97,8 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
             description=description
         )
         results.append(article)
+
+    for curr in SUPPORTED_CURRENCIES:
+        await _create_article()
 
     await update.inline_query.answer(results)
