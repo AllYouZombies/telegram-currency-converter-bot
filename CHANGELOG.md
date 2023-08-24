@@ -6,6 +6,41 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## Unreleased
+
+<small>[Compare with latest](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/2.0.0...HEAD)</small>
+
+### Added
+
+- Added instructions in first inline result ([423d2c3](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/423d2c3172faab5e48371fde9dd6887ed7cd1b35) by Рустам Астафеев).
+
+<!-- insertion marker -->
+## [2.0.0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/2.0.0) - 2023-08-24
+
+<small>[Compare with 1.2.0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.2.0...2.0.0)</small>
+
+### Added
+
+- Added some improvements, bug fixes, optimizations ([68cbc56](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/68cbc5620be60c0794c02723dab8e9725de7687a) by Рустам Астафеев).
+- Added data scraping from pultop.uz ([070ec12](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/070ec12316f652a00ba995110954ff82341cc2ca) by Рустам Астафеев).
+- Added some improvements and documentation ([e76194b](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/e76194bc529ddcd52118fa82fc6e28f3f3ae5790) by Рустам Астафеев).
+
+## [1.2.0](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.2.0) - 2023-08-23
+
+<small>[Compare with 1.1.3](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.1.3...1.2.0)</small>
+
+### Added
+
+- Added some improvements and documentation ([38e0453](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/38e0453a773eb9b8a3828253bc78746bac1ffc5e) by Рустам Астафеев).
+
+## [1.1.3](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.1.3) - 2023-08-22
+
+<small>[Compare with 1.1.2](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.1.2...1.1.3)</small>
+
+### Fixed
+
+- Fixed duplication of answers ([ec4f9c9](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/commit/ec4f9c95b3648c899ab23f5e05729bc35e2607b3) by Рустам Астафеев).
+
 ## [1.1.2](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/tags/1.1.2) - 2023-08-21
 
 <small>[Compare with 1.1.1](https://gitlab.anttek.io/kapusta/telegram-currency-converter-bot/compare/1.1.1...1.1.2)</small>
