@@ -120,4 +120,4 @@ async def _inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     for curr in SUPPORTED_CURRENCIES:
         await _create_article()
 
-    await update.inline_query.answer(results)
+    await update.inline_query.answer(results, cache_time=0)
