@@ -48,7 +48,18 @@ async def _inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         query = float(query)
     except ValueError:
         return
-    results = []
+    results = [
+        InlineQueryResultArticle(
+            id=str(uuid4()),
+            title=_('Click on the desired currency.'),
+            description=_('Detailed information about the currency will be sent to the chat.'),
+            input_message_content=InputTextMessageContent(
+                _('Type <code>@%s</code> in any chat and enter the amount to convert.\n\nE.g.\n<code>@%s 100</code>')
+                % (context.bot.username, context.bot.username),
+                parse_mode=ParseMode.HTML
+            ),
+        )
+    ]
 
     async def _create_article():
         exchange_rates = await ExchangeRate.get_rates(curr, BASE_CURR)  # All sources

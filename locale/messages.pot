@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-24 16:06+0500\n"
+"POT-Creation-Date: 2023-08-24 16:58+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,42 +38,59 @@ msgid ""
 "<code>@%s 100</code>\n"
 msgstr ""
 
-#: bot/inlines.py:58
+#: bot/inlines.py:54
+msgid "Click on the desired currency."
+msgstr ""
+
+#: bot/inlines.py:55
+msgid "Detailed information about the currency will be sent to the chat."
+msgstr ""
+
+#: bot/inlines.py:57
+#, python-format
+msgid ""
+"Type <code>@%s</code> in any chat and enter the amount to convert.\n"
+"\n"
+"E.g.\n"
+"<code>@%s 100</code>"
+msgstr ""
+
+#: bot/inlines.py:69
 msgid "CB rate"
 msgstr ""
 
-#: bot/inlines.py:60
+#: bot/inlines.py:71
 #, python-format
 msgid "<b>%s %s</b> - exchange rates"
 msgstr ""
 
-#: bot/inlines.py:61
+#: bot/inlines.py:72
 #, python-format
 msgid ""
 "\n"
 "CB rate: <b>%s</b>"
 msgstr ""
 
-#: bot/inlines.py:62 bot/inlines.py:84 bot/inlines.py:92 bot/inlines.py:100
+#: bot/inlines.py:73 bot/inlines.py:95 bot/inlines.py:103 bot/inlines.py:111
 #, python-format
 msgid ""
 "\n"
 "Sum: <b>%s</b>"
 msgstr ""
 
-#: bot/inlines.py:79
+#: bot/inlines.py:90
 msgid "➖ Best buy"
 msgstr ""
 
-#: bot/inlines.py:80 bot/inlines.py:88 bot/inlines.py:96
+#: bot/inlines.py:91 bot/inlines.py:99 bot/inlines.py:107
 msgid "Rate"
 msgstr ""
 
-#: bot/inlines.py:87
+#: bot/inlines.py:98
 msgid "➕ Best sell"
 msgstr ""
 
-#: bot/inlines.py:95
+#: bot/inlines.py:106
 msgid "⚖️ Average"
 msgstr ""
 
