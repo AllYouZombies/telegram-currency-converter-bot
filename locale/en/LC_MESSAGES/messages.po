@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-24 16:58+0500\n"
+"POT-Creation-Date: 2023-08-24 17:55+0500\n"
 "PO-Revision-Date: 2023-08-16 14:17+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -80,7 +80,7 @@ msgid ""
 msgstr ""
 
 #: bot/inlines.py:90
-msgid "➖ Best buy"
+msgid "➖ Best buy (bank buys)"
 msgstr ""
 
 #: bot/inlines.py:91 bot/inlines.py:99 bot/inlines.py:107
@@ -88,7 +88,7 @@ msgid "Rate"
 msgstr ""
 
 #: bot/inlines.py:98
-msgid "➕ Best sell"
+msgid "➕ Best sell (bank sells)"
 msgstr ""
 
 #: bot/inlines.py:106
@@ -148,5 +148,11 @@ msgstr ""
 #~ msgid ""
 #~ "\n"
 #~ "CB rate: %s"
+#~ msgstr ""
+
+#~ msgid "➖ Best buy"
+#~ msgstr ""
+
+#~ msgid "➕ Best sell"
 #~ msgstr ""
 

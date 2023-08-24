@@ -87,7 +87,7 @@ async def _inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
             elif exchange_rate.sell_rate and exchange_rate.sell_rate == best_sell:
                 best_selling_banks.add(exchange_rate.source)
         if best_buy:
-            best_buy_str = _('➖ Best buy')
+            best_buy_str = _('➖ Best buy (bank buys)')
             rate_str = _('Rate')
             text += (f'\n\n----------\n\n'
                      f'<b>{best_buy_str}</b>'
@@ -95,7 +95,7 @@ async def _inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
             text += _('\nSum: <b>%s</b>') % sep(query * best_buy)
             description += best_buy_str + ': ' + sep(best_buy)
         if best_sell:
-            best_sell_str = _('➕ Best sell')
+            best_sell_str = _('➕ Best sell (bank sells)')
             rate_str = _('Rate')
             text += (f'\n\n----------\n\n'
                      f'<b>{best_sell_str}</b>'

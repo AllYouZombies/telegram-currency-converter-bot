@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-24 16:58+0500\n"
+"POT-Creation-Date: 2023-08-24 17:55+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,7 @@ msgid ""
 msgstr ""
 
 #: bot/inlines.py:90
-msgid "➖ Best buy"
+msgid "➖ Best buy (bank buys)"
 msgstr ""
 
 #: bot/inlines.py:91 bot/inlines.py:99 bot/inlines.py:107
@@ -87,7 +87,7 @@ msgid "Rate"
 msgstr ""
 
 #: bot/inlines.py:98
-msgid "➕ Best sell"
+msgid "➕ Best sell (bank sells)"
 msgstr ""
 
 #: bot/inlines.py:106
