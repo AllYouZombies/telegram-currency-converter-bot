@@ -49,6 +49,7 @@ class User(Base):
             async with session_scope() as session:
                 user.language_code = update.effective_user.language_code
                 session.add(user)
+            return user
         return user
 
 

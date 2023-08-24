@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-21 17:18+0500\n"
+"POT-Creation-Date: 2023-08-24 16:06+0500\n"
 "PO-Revision-Date: 2023-08-16 14:39+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -47,14 +47,45 @@ msgstr ""
 "\n"
 "<code>@%s 100</code>\n"
 
-#: bot/inline.py:45
+#: bot/inlines.py:58
 msgid "CB rate"
 msgstr "Курс ЦБ"
 
-#: bot/inline.py:46
-msgid "Buying"
-msgstr "Покупка"
+#: bot/inlines.py:60
+#, python-format
+msgid "<b>%s %s</b> - exchange rates"
+msgstr "<b>%s %s</b> - курс валюты"
 
-#: bot/inline.py:47
-msgid "Selling"
-msgstr "Продажа"
+#: bot/inlines.py:61
+msgid ""
+"\n"
+"CB rate: <b>%s</b>"
+msgstr ""
+"\n"
+"Курс ЦБ: <b>%s</b>"
+
+#: bot/inlines.py:62 bot/inlines.py:84 bot/inlines.py:92 bot/inlines.py:100
+#, python-format
+msgid ""
+"\n"
+"Sum: <b>%s</b>"
+msgstr ""
+"\n"
+"Сумма: <b>%s</b>"
+
+#: bot/inlines.py:79
+msgid "➖ Best buy"
+msgstr "➖ Лучшая покупка"
+
+#: bot/inlines.py:80 bot/inlines.py:88 bot/inlines.py:96
+msgid "Rate"
+msgstr "Курс"
+
+#: bot/inlines.py:87
+msgid "➕ Best sell"
+msgstr "➕ Лучшая продажа"
+
+#: bot/inlines.py:95
+msgid "⚖️ Average"
+msgstr "⚖️ Среднее"
+

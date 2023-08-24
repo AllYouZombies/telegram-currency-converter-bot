@@ -3,7 +3,7 @@ import aiohttp
 import json
 from typing import Optional, List, Dict
 
-from converter.integrations._base import ExchangeRateSource, save_exchange_rate
+from converter.integrations._base import ExchangeRateSource
 from core.settings import BASE_CURR, SUPPORTED_CURRENCIES
 
 
@@ -42,11 +42,10 @@ class UzumBank(ExchangeRateSource):
         buy_rate: Optional[float] = await convert_rate(buy_rate_str) if buy_rate_str else None
         sell_rate_str: Optional[str] = exchange_rate_data.get('sell_rate')
         sell_rate: Optional[float] = await convert_rate(sell_rate_str) if sell_rate_str else None
-        rate_exists: bool = await self._check_existing(curr, BASE_CURR, rate, buy_rate, sell_rate)
+        rate_exists: bool = await self._check_existing(curr, BASE_CURR, rate, self.source_name, buy_rate, sell_rate)
         if rate_exists:
             return None
-        await save_exchange_rate(curr, BASE_CURR, rate,
-                                 source=self.source_name, buy_rate=buy_rate, sell_rate=sell_rate)
+        await self.save_exchange_rate(curr, BASE_CURR, rate, self.source_name, buy_rate, sell_rate)
 
     async def get_rates(self) -> None:
         """
@@ -58,11 +57,8 @@ class UzumBank(ExchangeRateSource):
                     response_text: str = await response.text()
                     assert response.status == 200, f'Uzum Bank returned {response.status} status code. {response_text}'
                     data: Dict[str, List[Dict[str, Optional[str]]]] = await response.json(encoding='utf-8')
-            except aiohttp.ClientError as e:
-                logging.error(f'Aiohttp client error: {e}')
-                return None
-            except json.JSONDecodeError as e:
-                logging.error(f'JSON decoding error: {e}')
+            except Exception as e:
+                logging.error(f'Cannot fetch exchange rates from Uzum Bank API. {e}')
                 return None
 
         exchange_rate_data: List[Dict[str, Optional[str]]] = data.get('data')

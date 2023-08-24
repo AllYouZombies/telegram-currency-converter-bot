@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import select, Date, cast
+from sqlalchemy import select, Date, cast, null, Float
 
 from converter.models import ExchangeRate
 from core.db import session_scope
@@ -53,46 +53,46 @@ class ExchangeRateSource:
                               from_currency: str,
                               to_currency: str,
                               rate: float,
-                              buy_rate: float,
-                              sell_rate: float):
+                              source: str = source_name,
+                              buy_rate: float = None,
+                              sell_rate: float = None) -> bool:
         async with session_scope() as session:
             axisting = await session.execute(select(ExchangeRate).filter(
                 cast(ExchangeRate.created_at, Date) == datetime.datetime.utcnow().date(),
-                ExchangeRate.source == self.source_name,
+                ExchangeRate.source == source,
                 ExchangeRate.from_currency == from_currency,
                 ExchangeRate.to_currency == to_currency,
-                ExchangeRate.rate == float(rate),
-                ExchangeRate.buy_rate == float(buy_rate),
-                ExchangeRate.sell_rate == float(sell_rate)
+                cast(ExchangeRate.rate, Float) == rate,
+                cast(ExchangeRate.buy_rate, Float) == buy_rate if buy_rate else ExchangeRate.buy_rate.is_(null()),
+                cast(ExchangeRate.sell_rate, Float) == sell_rate if sell_rate else ExchangeRate.sell_rate.is_(null())
             ))
             if len(axisting.scalars().all()) > 0:
                 return True
         return False
 
+    async def save_exchange_rate(self,
+                                 from_curr: str,
+                                 to_curr: str,
+                                 rate: float,
+                                 source: str = source_name,
+                                 buy_rate: float = None,
+                                 sell_rate: float = None):
+        """
+        Save the exchange rate for the given currencies to the database.
 
-async def save_exchange_rate(from_curr: str,
-                             to_curr: str,
-                             rate: str | float | int,
-                             source: str | None = None,
-                             buy_rate: str | float | int | None = None,
-                             sell_rate: str | float | int | None = None):
-    """
-    Save the exchange rate for the given currencies to the database.
+        :param from_curr: The currency to convert from.
+        :param to_curr: The currency to convert to.
+        :param source: The source of the exchange rate.
+        :param buy_rate: The buy rate.
+        :param sell_rate: The sell rate.
+        :param rate: The exchange rate.
+        """
 
-    :param from_curr: The currency to convert from.
-    :param to_curr: The currency to convert to.
-    :param source: The source of the exchange rate.
-    :param buy_rate: The buy rate.
-    :param sell_rate: The sell rate.
-    :param rate: The exchange rate.
-    """
-
-    async with session_scope() as session:
-        exchange_rate = ExchangeRate(from_currency=from_curr,
-                                     to_currency=to_curr,
-                                     rate=float(rate),
-                                     source=source,
-                                     buy_rate=buy_rate,
-                                     sell_rate=sell_rate
-                                     )
-        session.add(exchange_rate)
+        async with session_scope() as session:
+            exchange_rate = ExchangeRate(from_currency=from_curr,
+                                         to_currency=to_curr,
+                                         rate=rate,
+                                         source=source,
+                                         buy_rate=buy_rate,
+                                         sell_rate=sell_rate)
+            session.add(exchange_rate)

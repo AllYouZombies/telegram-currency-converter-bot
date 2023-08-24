@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-21 17:18+0500\n"
+"POT-Creation-Date: 2023-08-24 16:06+0500\n"
 "PO-Revision-Date: 2023-08-16 14:17+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -39,16 +39,43 @@ msgid ""
 "<code>@%s 100</code>\n"
 msgstr ""
 
-#: bot/inline.py:45
+#: bot/inlines.py:58
 msgid "CB rate"
 msgstr ""
 
-#: bot/inline.py:46
-msgid "Buying"
+#: bot/inlines.py:60
+#, python-format
+msgid "<b>%s %s</b> - exchange rates"
 msgstr ""
 
-#: bot/inline.py:47
-msgid "Selling"
+#: bot/inlines.py:61
+#, python-format
+msgid ""
+"\n"
+"CB rate: <b>%s</b>"
+msgstr ""
+
+#: bot/inlines.py:62 bot/inlines.py:84 bot/inlines.py:92 bot/inlines.py:100
+#, python-format
+msgid ""
+"\n"
+"Sum: <b>%s</b>"
+msgstr ""
+
+#: bot/inlines.py:79
+msgid "➖ Best buy"
+msgstr ""
+
+#: bot/inlines.py:80 bot/inlines.py:88 bot/inlines.py:96
+msgid "Rate"
+msgstr ""
+
+#: bot/inlines.py:87
+msgid "➕ Best sell"
+msgstr ""
+
+#: bot/inlines.py:95
+msgid "⚖️ Average"
 msgstr ""
 
 #~ msgid "Just a button"
@@ -84,5 +111,25 @@ msgstr ""
 #~ "\n"
 #~ "---\n"
 #~ "\n"
+#~ msgstr ""
+
+#~ msgid "Buying"
+#~ msgstr ""
+
+#~ msgid "Selling"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "CB rate: %s"
+#~ msgstr ""
+
+#~ msgid "Sum"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "CB rate: %s"
 #~ msgstr ""
 

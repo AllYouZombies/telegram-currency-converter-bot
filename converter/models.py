@@ -5,10 +5,6 @@ from sqlalchemy import Column, Integer, DateTime, String, Float, select, desc, f
 from core.db import Base, session_scope
 
 
-def default_rate(context):
-    return context.get_current_parameters()['rate']
-
-
 class ExchangeRate(Base):
     __tablename__ = "exchange_rates"
 
@@ -19,8 +15,8 @@ class ExchangeRate(Base):
     to_currency = Column(String, nullable=False)
     rate = Column(Float, nullable=False)
     source = Column(String, nullable=True)
-    buy_rate = Column(Float, nullable=True, default=default_rate)
-    sell_rate = Column(Float, nullable=True, default=default_rate)
+    buy_rate = Column(Float, nullable=True)
+    sell_rate = Column(Float, nullable=True)
 
     @classmethod
     async def get_rates(cls,

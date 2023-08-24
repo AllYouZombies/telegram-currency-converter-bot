@@ -11,7 +11,6 @@ from core.settings import SUPPORTED_CURRENCIES, BASE_CURR
 from users.models import User
 from utils.localization import activate_locale
 
-
 log = logging.getLogger('inlines')
 
 
@@ -55,41 +54,50 @@ async def _inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         exchange_rates = await ExchangeRate.get_rates(curr, BASE_CURR)  # All sources
         if not exchange_rates:
             return None
-        first_exchange_rate = exchange_rates[0]
-        cb_rate = sep(first_exchange_rate.rate)
-        cb_rate_str = _('CB rate')
-        buying_str = _('Buying')
-        selling_str = _('Selling')
-        title = f'{curr} ({cb_rate_str}: {cb_rate})'
-        text = f'<b>{sep(query)} {curr}</b>'
+        cb_rate = sep(exchange_rates[0].rate)
+        title = curr + ' (' + _('CB rate') + ': ' + cb_rate + ')'
+        description = ''
+        text = _('<b>%s %s</b> - exchange rates') % (sep(query), curr)
+        text += _('\nCB rate: <b>%s</b>') % cb_rate
+        text += _('\nSum: <b>%s</b>') % sep(query * exchange_rates[0].rate)
+        best_buy = None
+        best_sell = None
+        best_buying_banks = []
+        best_selling_banks = []
         for exchange_rate in exchange_rates:
-            buying = sep(exchange_rate.buy_rate)
-            selling = sep(exchange_rate.sell_rate)
-            buying_converted = sep(exchange_rate.buy_rate * query)
-            selling_converted = sep(exchange_rate.sell_rate * query)
-            text += (
-                f'\n\n---\n\n'
-                f'🏦 <b>{exchange_rate.source} ({exchange_rate.created_at.strftime("%d.%m.%Y")})</b>\n\n'
-            )
-            if query != 1:
-                text += (
-                    f' - {buying_str}: <b>{buying_converted}</b>\n'
-                    f' - {selling_str}: <b>{selling_converted}</b>\n\n'
-                )
-            text += (
-                f'1 {curr}:\n\n'
-                f' - {buying_str}: <b>{buying}</b>\n'
-                f' - {selling_str}: <b>{selling}</b>\n\n'
-                f'---'
-            )
-
-        text += f'\n\n{cb_rate_str}: {cb_rate}\n\n'
-
-        description = (f'{buying_str}: {sep(first_exchange_rate.buy_rate)} '
-                       f'({first_exchange_rate.source})\n'
-                       f'{selling_str}: {sep(first_exchange_rate.sell_rate)} '
-                       f'({first_exchange_rate.source})')
-
+            if exchange_rate.buy_rate and (not best_buy or exchange_rate.buy_rate > best_buy):
+                best_buy = exchange_rate.buy_rate
+                best_buying_banks = [exchange_rate.source]
+            elif exchange_rate.buy_rate and exchange_rate.buy_rate == best_buy:
+                best_buying_banks.append(exchange_rate.source)
+            if exchange_rate.sell_rate and (not best_sell or exchange_rate.sell_rate < best_sell):
+                best_sell = exchange_rate.sell_rate
+                best_selling_banks = [exchange_rate.source]
+            elif exchange_rate.sell_rate and exchange_rate.sell_rate == best_sell:
+                best_selling_banks.append(exchange_rate.source)
+        if best_buy:
+            best_buy_str = _('➖ Best buy')
+            rate_str = _('Rate')
+            text += (f'\n\n----------\n\n'
+                     f'<b>{best_buy_str}</b>'
+                     f'\n{rate_str}: <b>{best_buy}</b> ({", ".join(best_buying_banks)})')
+            text += _('\nSum: <b>%s</b>') % sep(query * best_buy)
+            description += best_buy_str + ': ' + str(best_buy)
+        if best_sell:
+            best_sell_str = _('➕ Best sell')
+            rate_str = _('Rate')
+            text += (f'\n\n----------\n\n'
+                     f'<b>{best_sell_str}</b>'
+                     f'\n{rate_str}: <b>{best_sell}</b> ({", ".join(best_selling_banks)})')
+            text += _('\nSum: <b>%s</b>') % sep(query * best_sell)
+            description += '\n' + best_sell_str + ': ' + str(best_sell)
+        if best_buy and best_sell:
+            avg_str = _('⚖️ Average')
+            rate_str = _('Rate')
+            text += (f'\n\n----------\n\n'
+                     f'<b>{avg_str}</b>'
+                     f'\n{rate_str}: <b>{sep((best_buy + best_sell) / 2)}</b>')
+            text += _('\nSum: <b>%s</b>') % sep(query * ((best_buy + best_sell) / 2))
         article = InlineQueryResultArticle(
             id=str(uuid4()),
             title=title,

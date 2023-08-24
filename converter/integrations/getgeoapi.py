@@ -1,6 +1,6 @@
 import aiohttp
 
-from converter.integrations._base import ExchangeRateSource, save_exchange_rate
+from converter.integrations._base import ExchangeRateSource
 from core.settings import GETGEOAPI_KEY, SUPPORTED_CURRENCIES, BASE_CURR
 
 
@@ -37,7 +37,7 @@ class GetGeoAPI(ExchangeRateSource):
         rate = float(rate) / self.coef
         if rate > 1:
             rate = '{:.2f}'.format(rate)
-        rate_exists = await self._check_existing(from_currency, to_currency, rate, rate, rate)
+        rate_exists = await self._check_existing(from_currency, to_currency, float(rate), self.source_name)
         if rate_exists:
             return
-        await save_exchange_rate(from_currency, to_currency, rate, source=self.source_name)
+        await self.save_exchange_rate(from_currency, to_currency, float(rate), self.source_name)
