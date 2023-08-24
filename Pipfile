@@ -18,6 +18,8 @@ asyncpg = "0.28"
 # Async Celery tasks
 celery = "5.3"
 redis = "5"
+# Scraping
+beautifulsoup4 = "4.12"
 
 [dev-packages]
 aiosqlite = "0.19"

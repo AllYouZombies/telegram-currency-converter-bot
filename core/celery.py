@@ -2,7 +2,8 @@ import os
 
 from celery import Celery
 
-from core.settings import REDIS_BASE_URL, TIME_ZONE, BASE_DIR, GETGEOAPI_UPDATE_INTERVAL, UZUM_BANK_UPDATE_INTERVAL
+from core.settings import REDIS_BASE_URL, TIME_ZONE, BASE_DIR, UZUM_BANK_UPDATE_INTERVAL, PULTOP_SCRAPE_INTERVAL, \
+    GETGEOAPI_UPDATE_INTERVAL
 
 app = Celery('core')
 
@@ -18,7 +19,15 @@ app.conf.accept_content = ['json']
 app.conf.beat_schedule = {
     'retrieve_uzum_exchange_rates': {
         'task': 'converter.tasks.retrieve_uzum_exchange_rates',
-        'schedule': 30
+        'schedule': UZUM_BANK_UPDATE_INTERVAL
+    },
+    'scrape_best_rates_from_pultop': {
+        'task': 'converter.tasks.scrape_best_rates_from_pultop',
+        'schedule': PULTOP_SCRAPE_INTERVAL
+    },
+    'retrieve_ggapi_exchange_rates': {
+        'task': 'converter.tasks.retrieve_ggapi_exchange_rates',
+        'schedule': GETGEOAPI_UPDATE_INTERVAL
     },
 }
 
