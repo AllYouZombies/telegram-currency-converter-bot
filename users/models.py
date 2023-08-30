@@ -8,7 +8,7 @@ from core.db import Base, Manager, engine, session_scope
 from core.settings import DEFAULT_LANGUAGE
 
 
-log = logging.getLogger('users.models')
+logging = logging.getLogger(__name__)
 
 
 class User(Base):
@@ -40,12 +40,12 @@ class User(Base):
             'last_name': update.effective_user.last_name,
             'username': update.effective_user.username,
         }
-        log.debug(f'Created default values: {defaults}')
+        logging.debug(f'Created default values: {defaults}')
 
         user, created = await User.objects.update_or_create(user_id=update.effective_user.id, defaults=defaults)
-        log.debug(f'User: {user}, created: {created}')
+        logging.debug(f'User: {user}, created: {created}')
         if created or not user.lock_lang:
-            log.debug(f'Updating user language code: {update.effective_user.language_code}')
+            logging.debug(f'Updating user language code: {update.effective_user.language_code}')
             async with session_scope() as session:
                 user.language_code = update.effective_user.language_code
                 session.add(user)

@@ -1,11 +1,16 @@
+import logging
 import gettext
+gettext.translation('messages', localedir='locale', languages=['en']).install(names=['gettext', 'ngettext'])
 
-from core.settings import SUPPORTED_LANGS, DEFAULT_LANGUAGE, LOCALE_DIR
+from core.settings import SUPPORTED_LANGS, DEFAULT_LANGUAGE
+
+
+logging = logging.getLogger(__name__)
 
 translations = {}
 
-for lang in SUPPORTED_LANGS:
-    translations[lang] = gettext.translation('messages', localedir='locale', languages=[lang])
+for code, name in SUPPORTED_LANGS:
+    translations[code] = gettext.translation('messages', localedir='locale', languages=[code])
 
 
 def activate_locale(language_code: str = DEFAULT_LANGUAGE) -> None:
@@ -15,7 +20,7 @@ def activate_locale(language_code: str = DEFAULT_LANGUAGE) -> None:
     :return: Nothing
     """
 
-    if language_code not in SUPPORTED_LANGS:
+    if language_code not in (i[0] for i in SUPPORTED_LANGS):
         language_code = DEFAULT_LANGUAGE
     translations[language_code].install(names=['gettext', 'ngettext'])
 
@@ -29,7 +34,7 @@ except NameError:
 def rev_translate(translated_msg):
     current_lang = gettext._current_domain
 
-    if current_lang not in SUPPORTED_LANGS:
+    if current_lang not in (i[0] for i in SUPPORTED_LANGS):
         current_lang = DEFAULT_LANGUAGE
 
     def find_key(lang_code):

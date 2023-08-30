@@ -63,7 +63,10 @@ else:
 DEFAULT_LANGUAGE = get_env('DEFAULT_LANGUAGE', 'ru')
 
 # Supported languages
-SUPPORTED_LANGS = ['en', 'ru']
+SUPPORTED_LANGS = (
+    ('ru', _('Russian')),
+    ('en', _('English')),
+)
 
 # Locale directory
 LOCALE_DIR = BASE_DIR / 'locale'

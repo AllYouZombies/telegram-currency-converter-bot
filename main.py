@@ -1,26 +1,29 @@
+# Import localization module first to install gettext and ngettext functions
+from telegram import Update
+
+from utils.localization import activate_locale, rev_translate
+
 import asyncio
 import logging
 import os
 
-from telegram.ext import ApplicationBuilder, CommandHandler, Application, InlineQueryHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, Application, InlineQueryHandler, MessageHandler, filters
 
-from core.db import engine, Base
 from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
-from utils.localization import activate_locale, rev_translate
+from core.db import engine, Base
 from bot import commands, inlines
+from bot.menus.dispatcher import menu_dispatcher
 
 
-# Disable logging for httpx, telegram and httpcore.
-# These libraries are used by the telegram bot library and they spam the logs.
-# Current solution is temporary and should be replaced with a better one.
-for lib in ['httpx', 'telegram', 'httpcore']:
-    lib_logger = logging.getLogger(lib)
-    lib_logger.setLevel(logging.WARNING)
+# Enable logging
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
 
-# Set up logging
-log = logging.getLogger('core')
-# TODO: Set up logging level from settings
-logging.basicConfig(level=logging.DEBUG)
+# set higher logging level for httpx to avoid all GET and POST requests being logged
+logging.getLogger("httpx").setLevel(logging.WARNING)
+
+logging = logging.getLogger(__name__)
 
 
 async def _setup_commands(application: Application) -> None:
@@ -33,19 +36,21 @@ async def _setup_commands(application: Application) -> None:
     :type application: Application
     """
 
-    log.info("Setting up bot commands...")
-    for lang in SUPPORTED_LANGS:
-        activate_locale(lang)
-        available_commands = [cmd for cmd in dir(commands) if cmd.startswith('_command_')]
-        _commands = [(cmd[9:], _(rev_translate(getattr(commands, cmd).__doc__))) for cmd in available_commands]
+    logging.info("Deleting existing bot commands...")
+    await application.bot.delete_my_commands()
+    logging.info("Setting up bot commands...")
+    for code, name in SUPPORTED_LANGS:
+        activate_locale(code)
+        available_commands = [cmd for cmd in dir(commands) if cmd.startswith('command_')]
+        _commands = [(cmd[8:], _(rev_translate(getattr(commands, cmd).__doc__))) for cmd in available_commands]
         await application.bot.set_my_commands(
-            language_code=lang,
+            language_code=code,
             commands=_commands
         )
-    log.info("Bot commands set up successfully.")
+    logging.info("Bot commands set up successfully.")
 
 
-async def _setup_command_handlers(application: Application) -> None:
+async def _setupcommand_handlers(application: Application) -> None:
     """
     Set up command handlers.
     This method adds command handlers for available commands.
@@ -54,14 +59,29 @@ async def _setup_command_handlers(application: Application) -> None:
     :type application: Application
     """
 
-    log.info("Setting up command handlers...")
-    available_commands = [cmd for cmd in dir(commands) if cmd.startswith('_command_')]
+    logging.info("Setting up command handlers...")
+    available_commands = [cmd for cmd in dir(commands) if cmd.startswith('command_')]
 
-    async def __add_command_handler(cmd):
-        application.add_handler(CommandHandler(cmd[9:], getattr(commands, cmd)))
+    async def __addcommand_handler(cmd):
+        application.add_handler(CommandHandler(cmd[8:], getattr(commands, cmd)))
 
-    await asyncio.gather(*[__add_command_handler(cmd) for cmd in available_commands])
-    log.info("Command handlers set up successfully.")
+    await asyncio.gather(*[__addcommand_handler(cmd) for cmd in available_commands])
+    logging.info("Command handlers set up successfully.")
+
+
+async def _setup_menu_dispatcher(application: Application) -> None:
+    """
+    Set up dispatcher for menu buttons.
+    Because menu buttons can be localized, we can't set separate handlers for each button.
+    This method adds a single handler for all menu buttons.
+    Dispatcher handles all menu buttons and calls corresponding menu handlers.
+
+    :param application: Application instance
+    """
+
+    logging.info("Setting up menu dispatcher...")
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, menu_dispatcher))
+    logging.info("Menu dispatcher set up successfully.")
 
 
 async def _setup_inline_handlers(application: Application) -> None:
@@ -73,14 +93,14 @@ async def _setup_inline_handlers(application: Application) -> None:
     :type application: Application
     """
 
-    log.info("Setting up inline handlers...")
+    logging.info("Setting up inline handlers...")
     available_inline_handlers = [cmd for cmd in dir(inlines) if cmd.startswith('_inline_')]
 
     async def __add_inline_handler(cmd):
         application.add_handler(InlineQueryHandler(getattr(inlines, cmd)))
 
     await asyncio.gather(*[__add_inline_handler(cmd) for cmd in available_inline_handlers])
-    log.info("Inline handlers set up successfully.")
+    logging.info("Inline handlers set up successfully.")
 
 
 async def _init_models() -> None:
@@ -91,7 +111,7 @@ async def _init_models() -> None:
     :rtype: None
     """
 
-    log.info("Initializing database models...")
+    logging.info("Initializing database models...")
     modules = os.listdir(BASE_DIR)
     for module in modules:
         if (os.path.isdir(os.path.join(BASE_DIR, module))
@@ -100,7 +120,7 @@ async def _init_models() -> None:
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    log.info("Database models initialized successfully.")
+    logging.info("Database models initialized successfully.")
 
 
 async def post_init(application: Application) -> None:
@@ -112,13 +132,13 @@ async def post_init(application: Application) -> None:
     :type application: Application
     """
 
-    log.info("Performing post-initialization tasks...")
+    logging.info("Performing post-initialization tasks...")
     await _init_models()
-    await application.bot.delete_my_commands()
-    await _setup_command_handlers(application)
-    await _setup_inline_handlers(application)
     await _setup_commands(application)
-    log.info("Post-initialization tasks completed.")
+    await _setupcommand_handlers(application)
+    await _setup_inline_handlers(application)
+    await _setup_menu_dispatcher(application)
+    logging.info("Post-initialization tasks completed.")
 
 
 def main():
@@ -126,13 +146,13 @@ def main():
     Main entry point for the Telegram bot application.
     """
 
-    log.info("Starting the Telegram bot application...")
+    logging.info("Starting the Telegram bot application...")
     app_instance = ApplicationBuilder().token(BOT_TOKEN) \
         .persistence(persistence) \
         .post_init(post_init) \
         .build()
 
-    app_instance.run_polling()
+    app_instance.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
 if __name__ == '__main__':

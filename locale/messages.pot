@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-24 17:55+0500\n"
+"POT-Creation-Date: 2023-08-30 12:19+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,80 +17,74 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: bot/commands.py:17
+#: bot/commands.py:9
 msgid "🚀 Restart the bot"
 msgstr ""
 
-#: bot/commands.py:22
+#: bot/commands.py:14
+msgid "Restarting the bot..."
+msgstr ""
+
+#: bot/commands.py:22 bot/menus/language.py:16 bot/menus/settings.py:13
+msgid "🌍 Language"
+msgstr ""
+
+#: bot/menus/dispatcher.py:50 bot/menus/language.py:21 bot/menus/main.py:8
+#: bot/menus/settings.py:12
+msgid "🏠 Home"
+msgstr ""
+
+#: bot/menus/dispatcher.py:53 bot/menus/language.py:21 bot/menus/settings.py:12
+msgid "⬅️ Back"
+msgstr ""
+
+#: bot/menus/dispatcher.py:79
+msgid "Sorry, I don't understand you."
+msgstr ""
+
+#: bot/menus/language.py:19
+msgid "Unknown"
+msgstr ""
+
+#: bot/menus/language.py:20
+#, python-format
+msgid ""
+"Your current language is %s.\n"
+"\n"
+"Choose your language from list below."
+msgstr ""
+
+#: bot/menus/language.py:38
+msgid "Your language is not changed."
+msgstr ""
+
+#: bot/menus/language.py:46
+#, python-format
+msgid "Your language is changed to %s."
+msgstr ""
+
+#: bot/menus/main.py:12 bot/menus/settings.py:8
+msgid "⚙️ Settings"
+msgstr ""
+
+#: bot/menus/main.py:12
+msgid "❓ Help"
+msgstr ""
+
+#: bot/menus/main.py:14
 #, python-format
 msgid "Hello, %s"
 msgstr ""
 
-#: bot/commands.py:24
-#, python-format
-msgid ""
-"\n"
-"\n"
-"This bot is a simple currency converter.\n"
-"\n"
-"You can use it inline by typing:\n"
-"\n"
-"<code>@%s 100</code>\n"
+#: bot/menus/settings.py:15
+msgid "This is the settings menu. Select the desired option from the list below."
 msgstr ""
 
-#: bot/inlines.py:54
-msgid "Click on the desired currency."
+#: core/settings.py:51
+msgid "Russian"
 msgstr ""
 
-#: bot/inlines.py:55
-msgid "Detailed information about the currency will be sent to the chat."
-msgstr ""
-
-#: bot/inlines.py:57
-#, python-format
-msgid ""
-"Type <code>@%s</code> in any chat and enter the amount to convert.\n"
-"\n"
-"E.g.\n"
-"<code>@%s 100</code>"
-msgstr ""
-
-#: bot/inlines.py:69
-msgid "CB rate"
-msgstr ""
-
-#: bot/inlines.py:71
-#, python-format
-msgid "<b>%s %s</b> - exchange rates"
-msgstr ""
-
-#: bot/inlines.py:72
-#, python-format
-msgid ""
-"\n"
-"CB rate: <b>%s</b>"
-msgstr ""
-
-#: bot/inlines.py:73 bot/inlines.py:95 bot/inlines.py:103 bot/inlines.py:111
-#, python-format
-msgid ""
-"\n"
-"Sum: <b>%s</b>"
-msgstr ""
-
-#: bot/inlines.py:90
-msgid "➖ Best buy (bank buys)"
-msgstr ""
-
-#: bot/inlines.py:91 bot/inlines.py:99 bot/inlines.py:107
-msgid "Rate"
-msgstr ""
-
-#: bot/inlines.py:98
-msgid "➕ Best sell (bank sells)"
-msgstr ""
-
-#: bot/inlines.py:106
-msgid "⚖️ Average"
+#: core/settings.py:52
+msgid "English"
 msgstr ""
 
