@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Added base functionality to handle menu buttons ([1d97232](https://gitlab.anttek.io/kapusta/telegram-bot/commit/1d972326fe661ba3e392019ccb248536e90d5ab4) by Рустам Астафеев).
 - Added needs: ['build'] to image push stage ([e213064](https://gitlab.anttek.io/kapusta/telegram-bot/commit/e213064ba1f5ba566fb497b927d89a6670f05047) by Рустам Астафеев).
 - Added comment to celery service, it runs both worker and beat ([593a338](https://gitlab.anttek.io/kapusta/telegram-bot/commit/593a33811f86a2089f7f1bc060a26bb018ecfb27) by Рустам Астафеев).
 - Added empty Celery Beat schedule setting ([d1aa644](https://gitlab.anttek.io/kapusta/telegram-bot/commit/d1aa6447428794582b231c197a42742a8ea41e63) by Рустам Астафеев).
