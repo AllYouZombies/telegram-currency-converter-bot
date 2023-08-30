@@ -1,13 +1,14 @@
 # Import localization module first to install gettext and ngettext functions
-from telegram import Update
-
 from utils.localization import activate_locale, rev_translate
+
 
 import asyncio
 import logging
 import os
 
-from telegram.ext import ApplicationBuilder, CommandHandler, Application, InlineQueryHandler, MessageHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, Application, InlineQueryHandler, MessageHandler, filters, \
+    Defaults
+from telegram import Update
 
 from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
 from core.db import engine, Base
@@ -147,8 +148,10 @@ def main():
     """
 
     logging.info("Starting the Telegram bot application...")
+    defaults = Defaults(parse_mode='HTML')
     app_instance = ApplicationBuilder().token(BOT_TOKEN) \
         .persistence(persistence) \
+        .defaults(defaults) \
         .post_init(post_init) \
         .build()
 

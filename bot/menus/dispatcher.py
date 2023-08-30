@@ -2,7 +2,6 @@ import logging
 import os
 
 from telegram import Update
-from telegram.ext import ContextTypes
 
 from bot.utils import show_typing, assign_user_and_localize
 from core.settings import BASE_DIR
@@ -34,7 +33,7 @@ async def _get_handler(modules, func_name):
 
 @show_typing()
 @assign_user_and_localize()
-async def menu_dispatcher(update: Update, context: ContextTypes.DEFAULT_TYPE, user, *args, **kwargs) -> None:
+async def menu_dispatcher(update: Update, context, user, *args, **kwargs) -> None:
     """
     Menu button dispatcher.
     This method is called when user clicks on a menu button.
@@ -72,7 +71,7 @@ async def menu_dispatcher(update: Update, context: ContextTypes.DEFAULT_TYPE, us
         return await menu_no_handler(update, context, user, *args, **kwargs)
 
 
-async def menu_no_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, user, *args, **kwargs) -> None:
+async def menu_no_handler(update: Update, context, user, *args, **kwargs) -> None:
     """
     Default handler for unknown commands.
     """
