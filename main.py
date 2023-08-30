@@ -1,7 +1,3 @@
-# Import localization module first to install gettext and ngettext functions
-from utils.localization import activate_locale, rev_translate
-
-
 import asyncio
 import logging
 import os
@@ -10,6 +6,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, Application, Inline
     Defaults
 from telegram import Update
 
+from utils.localization import activate_locale, rev_translate
 from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
 from core.db import engine, Base
 from bot import commands, inlines
@@ -104,26 +101,6 @@ async def _setup_inline_handlers(application: Application) -> None:
     logging.info("Inline handlers set up successfully.")
 
 
-async def _init_models() -> None:
-    """
-    Initialize database models.
-    This method imports all models from all modules in the BASE_DIR directory and creates all tables in the database.
-
-    :rtype: None
-    """
-
-    logging.info("Initializing database models...")
-    modules = os.listdir(BASE_DIR)
-    for module in modules:
-        if (os.path.isdir(os.path.join(BASE_DIR, module))
-                and os.path.exists(os.path.join(BASE_DIR, module, 'models.py'))):
-            __import__(f'{module}.models')
-
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    logging.info("Database models initialized successfully.")
-
-
 async def post_init(application: Application) -> None:
     """
     Perform post-initialization tasks.
@@ -134,7 +111,6 @@ async def post_init(application: Application) -> None:
     """
 
     logging.info("Performing post-initialization tasks...")
-    await _init_models()
     await _setup_commands(application)
     await _setupcommand_handlers(application)
     await _setup_inline_handlers(application)
