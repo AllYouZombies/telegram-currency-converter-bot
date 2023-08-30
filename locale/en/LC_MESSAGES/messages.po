@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-17 19:50+0500\n"
+"POT-Creation-Date: 2023-08-30 12:19+0500\n"
 "PO-Revision-Date: 2023-08-16 14:17+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,15 +18,74 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: bot/commands.py:17
+#: bot/commands.py:9
 msgid "🚀 Restart the bot"
 msgstr "🚀 Restart the bot"
 
-#: bot/commands.py:22
+#: bot/commands.py:14
+msgid "Restarting the bot..."
+msgstr "🚀 Restart the bot"
+
+#: bot/commands.py:22 bot/menus/language.py:16 bot/menus/settings.py:13
+msgid "🌍 Language"
+msgstr ""
+
+#: bot/menus/dispatcher.py:50 bot/menus/language.py:21 bot/menus/main.py:8
+#: bot/menus/settings.py:12
+msgid "🏠 Home"
+msgstr ""
+
+#: bot/menus/dispatcher.py:53 bot/menus/language.py:21 bot/menus/settings.py:12
+msgid "⬅️ Back"
+msgstr ""
+
+#: bot/menus/dispatcher.py:79
+msgid "Sorry, I don't understand you."
+msgstr ""
+
+#: bot/menus/language.py:19
+msgid "Unknown"
+msgstr ""
+
+#: bot/menus/language.py:20
+#, python-format
+msgid ""
+"Your current language is %s.\n"
+"\n"
+"Choose your language from list below."
+msgstr ""
+
+#: bot/menus/language.py:38
+msgid "Your language is not changed."
+msgstr ""
+
+#: bot/menus/language.py:46
+#, python-format
+msgid "Your language is changed to %s."
+msgstr ""
+
+#: bot/menus/main.py:12 bot/menus/settings.py:8
+msgid "⚙️ Settings"
+msgstr ""
+
+#: bot/menus/main.py:12
+msgid "❓ Help"
+msgstr ""
+
+#: bot/menus/main.py:14
 #, python-format
 msgid "Hello, %s"
 msgstr ""
 
-#: bot/commands.py:24
-msgid "Just a button"
+#: bot/menus/settings.py:15
+msgid "This is the settings menu. Select the desired option from the list below."
 msgstr ""
+
+#: core/settings.py:51
+msgid "Russian"
+msgstr "Русский"
+
+#: core/settings.py:52
+msgid "English"
+msgstr ""
+
