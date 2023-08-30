@@ -15,6 +15,7 @@ class ExchangeRate(Base):
     to_currency = Column(String, nullable=False)
     rate = Column(Float, nullable=False)
     source = Column(String, nullable=True)
+    bank_name = Column(String, nullable=True)
     buy_rate = Column(Float, nullable=True)
     sell_rate = Column(Float, nullable=True)
 
@@ -34,7 +35,7 @@ class ExchangeRate(Base):
             subquery = (
                 select(cls.source, func.max(cls.created_at).label('max_created_at'))
                 .filter_by(from_currency=from_currency, to_currency=to_currency)
-                .group_by(cls.source)
+                .group_by(cls.source).group_by(cls.bank_name)
                 .alias()
             )
 
@@ -44,6 +45,7 @@ class ExchangeRate(Base):
                     subquery,
                     and_(
                         cls.source == subquery.c.source,
+                        cls.bank_name == subquery.c.bank_name,
                         cls.created_at == subquery.c.max_created_at
                     )
                 )

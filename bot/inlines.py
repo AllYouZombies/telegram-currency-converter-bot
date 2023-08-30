@@ -78,14 +78,14 @@ async def _inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         for exchange_rate in exchange_rates:
             if exchange_rate.buy_rate and (not best_buy or exchange_rate.buy_rate > best_buy):
                 best_buy = exchange_rate.buy_rate
-                best_buying_banks = {exchange_rate.source}
+                best_buying_banks = {exchange_rate.bank_name}
             elif exchange_rate.buy_rate and exchange_rate.buy_rate == best_buy:
-                best_buying_banks.add(exchange_rate.source)
+                best_buying_banks.add(exchange_rate.bank_name)
             if exchange_rate.sell_rate and (not best_sell or exchange_rate.sell_rate < best_sell):
                 best_sell = exchange_rate.sell_rate
-                best_selling_banks = {exchange_rate.source}
+                best_selling_banks = {exchange_rate.bank_name}
             elif exchange_rate.sell_rate and exchange_rate.sell_rate == best_sell:
-                best_selling_banks.add(exchange_rate.source)
+                best_selling_banks.add(exchange_rate.bank_name)
         if best_buy:
             best_buy_str = _('➖ Best buy (bank buys)')
             rate_str = _('Rate')

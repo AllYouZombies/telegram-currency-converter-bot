@@ -54,12 +54,14 @@ class ExchangeRateSource:
                               to_currency: str,
                               rate: float,
                               source: str = source_name,
+                              bank_name: str = None,
                               buy_rate: float = None,
                               sell_rate: float = None) -> bool:
         async with session_scope() as session:
             axisting = await session.execute(select(ExchangeRate).filter(
                 cast(ExchangeRate.created_at, Date) == datetime.datetime.utcnow().date(),
                 ExchangeRate.source == source,
+                ExchangeRate.bank_name == bank_name,
                 ExchangeRate.from_currency == from_currency,
                 ExchangeRate.to_currency == to_currency,
                 cast(ExchangeRate.rate, Float) == rate,
@@ -75,6 +77,7 @@ class ExchangeRateSource:
                                  to_curr: str,
                                  rate: float,
                                  source: str = source_name,
+                                 bank_name: str = None,
                                  buy_rate: float = None,
                                  sell_rate: float = None):
         """
@@ -82,6 +85,7 @@ class ExchangeRateSource:
 
         :param from_curr: The currency to convert from.
         :param to_curr: The currency to convert to.
+        :param bank_name: Bank name
         :param source: The source of the exchange rate.
         :param buy_rate: The buy rate.
         :param sell_rate: The sell rate.
@@ -93,6 +97,7 @@ class ExchangeRateSource:
                                          to_currency=to_curr,
                                          rate=rate,
                                          source=source,
+                                         bank_name=bank_name,
                                          buy_rate=buy_rate,
                                          sell_rate=sell_rate)
             session.add(exchange_rate)

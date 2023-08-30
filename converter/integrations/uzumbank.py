@@ -42,10 +42,11 @@ class UzumBank(ExchangeRateSource):
         buy_rate: Optional[float] = await convert_rate(buy_rate_str) if buy_rate_str else None
         sell_rate_str: Optional[str] = exchange_rate_data.get('sell_rate')
         sell_rate: Optional[float] = await convert_rate(sell_rate_str) if sell_rate_str else None
-        rate_exists: bool = await self._check_existing(curr, BASE_CURR, rate, self.source_name, buy_rate, sell_rate)
+        rate_exists: bool = await self._check_existing(curr, BASE_CURR, rate, self.source_name, self.source_name,
+                                                       buy_rate, sell_rate)
         if rate_exists:
             return None
-        await self.save_exchange_rate(curr, BASE_CURR, rate, self.source_name, buy_rate, sell_rate)
+        await self.save_exchange_rate(curr, BASE_CURR, rate, self.source_name, self.source_name, buy_rate, sell_rate)
 
     async def get_rates(self) -> None:
         """
