@@ -1,5 +1,4 @@
 from telegram import Update
-from telegram.ext import ContextTypes
 
 from bot.keyboard import get_kb
 from bot.utils import track_and_route, save_kb_keys, description
@@ -7,7 +6,7 @@ from bot.utils import track_and_route, save_kb_keys, description
 
 @description(_('⚙️ Settings'))
 @track_and_route()
-async def menu_settings(update: Update, context: ContextTypes.DEFAULT_TYPE, user, *args, **kwargs) -> None:
+async def menu_settings(update: Update, context, user, *args, **kwargs) -> None:
     buttons = [
         [_('⬅️ Back'), _('🏠 Home')],
         [_('🌍 Language')],

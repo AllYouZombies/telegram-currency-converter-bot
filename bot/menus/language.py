@@ -1,7 +1,6 @@
 import logging
 
 from telegram import Update
-from telegram.ext import ContextTypes
 
 from bot.keyboard import get_kb
 from bot.menus.dispatcher import menu_dispatcher
@@ -15,7 +14,7 @@ logging = logging.getLogger(__name__)
 
 @description(_('🌍 Language'))
 @track_and_route()
-async def menu_language(update: Update, context: ContextTypes.DEFAULT_TYPE, user, *args, **kwargs) -> None:
+async def menu_language(update: Update, context, user, *args, **kwargs) -> None:
     lang_name = next((i[1] for i in SUPPORTED_LANGS if i[0] == user.language_code), _('Unknown'))
     text = _('Your current language is %s.\n\nChoose your language from list below.') % lang_name
     buttons = [[_('⬅️ Back'), _('🏠 Home')]] + list(
@@ -27,7 +26,7 @@ async def menu_language(update: Update, context: ContextTypes.DEFAULT_TYPE, user
     await update.message.reply_text(text, reply_markup=kb)
 
 
-async def __set_language(update: Update, context: ContextTypes.DEFAULT_TYPE, user, *args, **kwargs) -> None:
+async def __set_language(update: Update, context, user, *args, **kwargs) -> None:
     chosen_lang = update.message.text
     lang_code, lang_name = next((i for i in SUPPORTED_LANGS if i[1] == chosen_lang), (None, None))
     if lang_code is None:
