@@ -37,6 +37,10 @@ ENV PATH="/venv/bin:$PATH"
 
 COPY --chown=appuser:appuser . .
 
+RUN chmod +x docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
 CMD ["python", "main.py"]
 
 VOLUME /home/appuser/uploads

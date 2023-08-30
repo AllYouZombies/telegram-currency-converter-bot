@@ -1,6 +1,4 @@
 import gettext
-gettext.translation('messages', localedir='locale', languages=['en']).install(names=['gettext', 'ngettext'])
-
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -8,6 +6,12 @@ from telegram.ext import PicklePersistence
 
 from utils.env import get_env
 
+# Activate gettext to get translations working. See:
+# https://docs.python.org/3/library/gettext.html
+# It is important to initialize gettext before importing any other modules.
+# Otherwise, translations won't work. Or even worse, you'll get an error saying
+# that _() is not defined.
+gettext.translation('messages', localedir='locale', languages=['en']).install(names=['_'])
 
 # Load environment variables from .env file
 load_dotenv()

@@ -29,10 +29,11 @@ docker compose up -d --build
 ## Features implemented
 
 - [x] Fully asynchronous
+- [x] Latest async Telegram API support
+- [x] Async database queries using SQLAlchemy
+- [x] Database migrations management with [Alembic](https://alembic.sqlalchemy.org/en/latest/)
 - [x] [Localization](docs/localization.md)
 - [x] Polling mode
-- [x] Latest async Telegram API support
-- [x] Async database queris using SQLAlchemy
 - [x] Async tasks using [Celery](https://docs.celeryproject.org/en/stable/)
 - [x] Docker, Docker Compose and Docker Swarm support
 - [x] [CI/CD] using [GitLab CI](https://docs.gitlab.com/ee/ci/) and [Portainer](https://www.portainer.io/)
@@ -40,7 +41,6 @@ docker compose up -d --build
 ## Features to be implemented
 
 - [ ] Webhook mode
-- [ ] Database migrations management
 - [ ] Caching using [Redis](https://redis.io/)
 - [ ] Run with multiple bot tokens
 - [ ] Persistence implementation with [Redis](https://redis.io/)
