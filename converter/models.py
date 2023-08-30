@@ -33,7 +33,7 @@ class ExchangeRate(Base):
 
         async with session_scope() as session:
             subquery = (
-                select(cls.source, func.max(cls.created_at).label('max_created_at'))
+                select(cls.source, cls.bank_name, func.max(cls.created_at).label('max_created_at'))
                 .filter_by(from_currency=from_currency, to_currency=to_currency)
                 .group_by(cls.source).group_by(cls.bank_name)
                 .alias()

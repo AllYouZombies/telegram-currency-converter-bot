@@ -4,7 +4,7 @@ import re
 
 import aiohttp
 from bs4 import BeautifulSoup
-from sqlalchemy import select, Date, cast, delete
+from sqlalchemy import Date, cast, delete, and_
 
 from converter.integrations._base import ExchangeRateSource
 from converter.models import ExchangeRate
@@ -16,6 +16,7 @@ log = logging.getLogger('integrations.pultop')
 
 class Pultop(ExchangeRateSource):
     endpoint = 'https://pultop.uz/kurs-obmena-valyut/'
+    source_name = 'pultop'
 
     def __init__(self) -> None:
         super().__init__()
@@ -49,24 +50,35 @@ class Pultop(ExchangeRateSource):
             cb_rate = _format_currency_value(columns[3].text.strip())
             actual_rate_banks = set(best_buying_banks + best_selling_banks)
             async with session_scope() as db_session:
-                existig_rate_banks = await db_session.execute(select(ExchangeRate).filter(
-                    cast(ExchangeRate.created_at, Date) == datetime.date.today()
-                ))
-                existig_rate_banks = set(rate.bank_name for rate in existig_rate_banks.scalars().all())
+                await db_session.execute(
+                    delete(ExchangeRate)
+                    .where(and_(
+                        cast(ExchangeRate.created_at, Date) == datetime.date.today(),
+                        ExchangeRate.source == self.source_name,
+                        ~ExchangeRate.bank_name.in_(actual_rate_banks),
+                        ExchangeRate.from_currency == currency,
+                        ExchangeRate.to_currency == BASE_CURR
+                    ))
+                )
             for bank_name in actual_rate_banks:
                 buy_rate = best_buy if bank_name in best_buying_banks else None
                 sell_rate = best_sell if bank_name in best_selling_banks else None
-                rate_exists = await self._check_existing(currency, BASE_CURR, cb_rate, bank_name, buy_rate, sell_rate)
+                rate_exists = await self._check_existing(from_currency=currency,
+                                                         to_currency=BASE_CURR,
+                                                         rate=cb_rate,
+                                                         source=self.source_name,
+                                                         bank_name=bank_name,
+                                                         buy_rate=buy_rate,
+                                                         sell_rate=sell_rate)
                 if rate_exists:
                     continue
-                if bank_name not in existig_rate_banks:
-                    async with session_scope() as db_session:
-                        await db_session.execute(delete(ExchangeRate).filter(
-                            cast(ExchangeRate.created_at, Date) == datetime.date.today(),
-                            ExchangeRate.source == self.source_name,
-                            ExchangeRate.bank_name == bank_name
-                        ))
-                await self.save_exchange_rate(currency, BASE_CURR, cb_rate, bank_name, buy_rate, sell_rate)
+                await self.save_exchange_rate(from_curr=currency,
+                                              to_curr=BASE_CURR,
+                                              rate=cb_rate,
+                                              source=self.source_name,
+                                              bank_name=bank_name,
+                                              buy_rate=buy_rate,
+                                              sell_rate=sell_rate)
 
         async with aiohttp.ClientSession() as session:
             async with session.get(self.endpoint, ssl=False) as response:

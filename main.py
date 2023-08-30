@@ -1,17 +1,14 @@
 import asyncio
 import logging
-import os
 
+from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, Application, InlineQueryHandler, MessageHandler, filters, \
     Defaults
-from telegram import Update
 
-from utils.localization import activate_locale, rev_translate
-from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
-from core.db import engine, Base
 from bot import commands, inlines
 from bot.menus.dispatcher import menu_dispatcher
-
+from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS
+from utils.localization import activate_locale, rev_translate
 
 # Enable logging
 logging.basicConfig(

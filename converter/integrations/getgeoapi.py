@@ -37,7 +37,13 @@ class GetGeoAPI(ExchangeRateSource):
         rate = float(rate) / self.coef
         if rate > 1:
             rate = '{:.2f}'.format(rate)
-        rate_exists = await self._check_existing(from_currency, to_currency, float(rate), self.source_name)
+        rate_exists = await self._check_existing(from_currency=from_currency,
+                                                 to_currency=to_currency,
+                                                 rate=float(rate),
+                                                 source=self.source_name)
         if rate_exists:
             return
-        await self.save_exchange_rate(from_currency, to_currency, float(rate), self.source_name)
+        await self.save_exchange_rate(from_curr=from_currency,
+                                      to_curr=to_currency,
+                                      rate=float(rate),
+                                      source=self.source_name)
