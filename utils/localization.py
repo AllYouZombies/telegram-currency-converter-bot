@@ -1,6 +1,5 @@
 import logging
 import gettext
-gettext.translation('messages', localedir='locale', languages=['en']).install(names=['gettext', 'ngettext'])
 
 from core.settings import SUPPORTED_LANGS, DEFAULT_LANGUAGE
 

@@ -1,7 +1,3 @@
-# Import localization module first to install gettext and ngettext functions
-from utils.localization import activate_locale, rev_translate
-
-
 import asyncio
 import logging
 import os
@@ -10,6 +6,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, Application, Inline
     Defaults
 from telegram import Update
 
+from utils.localization import activate_locale, rev_translate
 from core.settings import BOT_TOKEN, persistence, SUPPORTED_LANGS, BASE_DIR
 from core.db import engine, Base
 from bot import commands, inlines

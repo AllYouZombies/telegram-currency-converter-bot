@@ -1,3 +1,6 @@
+import gettext
+gettext.translation('messages', localedir='locale', languages=['en']).install(names=['gettext', 'ngettext'])
+
 from pathlib import Path
 
 from dotenv import load_dotenv
