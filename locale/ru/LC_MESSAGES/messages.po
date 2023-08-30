@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-30 12:19+0500\n"
+"POT-Creation-Date: 2023-08-30 16:00+0500\n"
 "PO-Revision-Date: 2023-08-16 14:39+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,36 +19,100 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: bot/commands.py:9
+#: bot/commands.py:8
 msgid "🚀 Restart the bot"
 msgstr "🚀 Перезапустить бота"
 
-#: bot/commands.py:14
+#: bot/commands.py:13
 msgid "Restarting the bot..."
 msgstr "Перезапуск бота..."
 
-#: bot/commands.py:22 bot/menus/language.py:16 bot/menus/settings.py:13
+#: bot/commands.py:21 bot/menus/language.py:15 bot/menus/settings.py:12
 msgid "🌍 Language"
 msgstr "🌍 Язык"
 
-#: bot/menus/dispatcher.py:50 bot/menus/language.py:21 bot/menus/main.py:8
-#: bot/menus/settings.py:12
+#: bot/inlines.py:54
+msgid "Click on the desired currency."
+msgstr "Кликните на желаемую валюту."
+
+#: bot/inlines.py:55
+msgid "Detailed information about the currency will be sent to the chat."
+msgstr "Подробная информация будет отправлена в чат."
+
+#: bot/inlines.py:57
+#, python-format
+msgid ""
+"Type <code>@%s</code> in any chat and enter the amount to convert.\n"
+"\n"
+"E.g.\n"
+"<code>@%s 100</code>"
+msgstr ""
+"Наберите <code>@%s</code> в любом чате и введите сумму для конвертирования.\n"
+"\n"
+"Напр.\n"
+"<code>@%s 100</code>"
+
+#: bot/inlines.py:69
+msgid "CB rate"
+msgstr "Курс ЦБ"
+
+#: bot/inlines.py:71
+#, python-format
+msgid "<b>%s %s</b> - exchange rates"
+msgstr "<b>%s %s</b> - курсы валют"
+
+#: bot/inlines.py:72
+#, python-format
+msgid ""
+"\n"
+"CB rate: <b>%s</b>"
+msgstr ""
+"\n"
+"Курс ЦБ: <b>%s</b>"
+
+#: bot/inlines.py:73 bot/inlines.py:95 bot/inlines.py:103 bot/inlines.py:111
+#, python-format
+msgid ""
+"\n"
+"Sum: <b>%s</b>"
+msgstr ""
+"\n"
+"Сумма: <b>%s</b>"
+
+#: bot/inlines.py:90
+msgid "➖ Best buy (bank buys)"
+msgstr "➖ Лучшая покупка (банк покупает)"
+
+#: bot/inlines.py:91 bot/inlines.py:99 bot/inlines.py:107
+msgid "Rate"
+msgstr "Курс"
+
+#: bot/inlines.py:98
+msgid "➕ Best sell (bank sells)"
+msgstr "➕ Лучшая продажа (банк продает)"
+
+#: bot/inlines.py:106
+msgid "⚖️ Average"
+msgstr "⚖️ Среднее"
+
+#: bot/menus/dispatcher.py:49 bot/menus/language.py:20 bot/menus/main.py:7
+#: bot/menus/settings.py:11
 msgid "🏠 Home"
 msgstr "🏠 Главное меню"
 
-#: bot/menus/dispatcher.py:53 bot/menus/language.py:21 bot/menus/settings.py:12
+#: bot/menus/dispatcher.py:52 bot/menus/language.py:20 bot/menus/settings.py:11
 msgid "⬅️ Back"
 msgstr "⬅️ Назад"
 
-#: bot/menus/dispatcher.py:79
+#: bot/menus/dispatcher.py:78
 msgid "Sorry, I don't understand you."
 msgstr "Простите, я вас не понял."
 
-#: bot/menus/language.py:19
+#: bot/menus/language.py:18
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: bot/menus/language.py:20
+#: bot/menus/language.py:19
 #, python-format
 msgid ""
 "Your current language is %s.\n"
@@ -59,37 +123,56 @@ msgstr ""
 "\n"
 "Выберите язык из списка ниже."
 
-#: bot/menus/language.py:38
+#: bot/menus/language.py:37
 msgid "Your language is not changed."
 msgstr "Ваш язык не изменен."
 
-#: bot/menus/language.py:46
+#: bot/menus/language.py:45
 #, python-format
 msgid "Your language is changed to %s."
 msgstr "Ваш язык изменен на %s."
 
-#: bot/menus/main.py:12 bot/menus/settings.py:8
+#: bot/menus/main.py:11 bot/menus/settings.py:7
 msgid "⚙️ Settings"
 msgstr "⚙️ Настройки"
 
-#: bot/menus/main.py:12
+#: bot/menus/main.py:11
 msgid "❓ Help"
 msgstr "❓ Помощь"
 
-#: bot/menus/main.py:14
+#: bot/menus/main.py:13
 #, python-format
 msgid "Hello, %s"
 msgstr "Привет, %s"
 
-#: bot/menus/settings.py:15
+#: bot/menus/main.py:14
+#, python-format
+msgid ""
+"\n"
+"\n"
+"This bot is a simple currency converter.\n"
+"\n"
+"You can use it inline by typing:\n"
+"\n"
+"<code>@%s 100</code>\n"
+msgstr ""
+"\n"
+"\n"
+"Этот бот - простой конвертер валют.\n"
+"\n"
+"Вы можете использовать его в любом чате, набрав:\n"
+"\n"
+"<code>@%s 100</code>\n"
+
+#: bot/menus/settings.py:14
 msgid "This is the settings menu. Select the desired option from the list below."
 msgstr "Это меню настроек. Выберите желаемую опцию из списка ниже."
 
-#: core/settings.py:51
+#: core/settings.py:67
 msgid "Russian"
 msgstr "Русский"
 
-#: core/settings.py:52
+#: core/settings.py:68
 msgid "English"
 msgstr ""
 
