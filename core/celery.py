@@ -3,7 +3,7 @@ import os
 from celery import Celery
 
 from core.settings import REDIS_BASE_URL, TIME_ZONE, BASE_DIR, UZUM_BANK_UPDATE_INTERVAL, PULTOP_SCRAPE_INTERVAL, \
-    GETGEOAPI_UPDATE_INTERVAL
+    GETGEOAPI_UPDATE_INTERVAL, GETGEOAPI_KEY
 
 app = Celery('core')
 
@@ -25,11 +25,13 @@ app.conf.beat_schedule = {
         'task': 'converter.tasks.scrape_best_rates_from_pultop',
         'schedule': PULTOP_SCRAPE_INTERVAL
     },
-    'retrieve_ggapi_exchange_rates': {
+}
+
+if GETGEOAPI_KEY:
+    app.conf.beat_schedule['retrieve_ggapi_exchange_rates'] = {
         'task': 'converter.tasks.retrieve_ggapi_exchange_rates',
         'schedule': GETGEOAPI_UPDATE_INTERVAL
-    },
-}
+    }
 
 module_names = []
 modules = os.listdir(BASE_DIR)
