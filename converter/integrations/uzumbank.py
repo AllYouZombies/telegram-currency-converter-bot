@@ -1,6 +1,5 @@
 import logging
 import aiohttp
-import json
 from typing import Optional, List, Dict
 
 from converter.integrations._base import ExchangeRateSource
