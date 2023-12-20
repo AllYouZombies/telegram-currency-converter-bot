@@ -39,7 +39,7 @@ COPY --chown=appuser:appuser . .
 
 RUN chmod +x docker-entrypoint.sh
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["/home/appuser/docker-entrypoint.sh"]
 
 CMD ["python", "main.py"]
 
