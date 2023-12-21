@@ -6,13 +6,16 @@ venv/
 
 Dockerfile
 compose.yml
+compose.override.yml
 .dockerignore
 
 .git/
 .gitignore
 README.md
+CHANGELOG.md
 LICENSE
 CONTRIBUTING.md
+CODE_OF_CONDUCT.md
 docs/
 
 .idea/
